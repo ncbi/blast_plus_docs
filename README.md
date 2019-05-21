@@ -10,8 +10,8 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
    * [Getting Started](#getting-started)
        * [What is cloud computing?](#what-is-cloud-computing)
        * [What is Docker?](#what-is-docker)
-       * [Before you start](#before-you-start)
-   * [Quick Start Guide – A Basic Example](#quick-start-guide--a-basic-example)
+   * [Quick Start Guide – A small example](#quick-start-guide--a-small-example)     
+   * [Before you start](#before-you-start)  
    * [A Step-by-Step Guide using Docker and BLAST](#a-step-by-step-guide-using-docker-and-blast)
        * [Step 1. Install Docker](#step-1-install-docker)
            * [Docker command options](#docker-command-options)
@@ -54,59 +54,32 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
 [Docker](https://www.docker.com/) is a tool to perform operating-system level virtualization using software containers. In containerization technology<sup>*</sup>, an image is a snapshot of an analytical environment encapsulating application(s) and dependencies. An image, which is essentially a file build from a list of instructions, can be saved and easily shared for others to recreate the exact analytical environment across platforms and operating systems. A container is a runtime instance of an image. By using containerization, users can bypass the often-complicated steps in compiling, configuring and installing a Unix-based tool like BLAST+. In addition to portability, containerization is a light-weight approach to make analysis more findable, accessible, interoperable, reusable (F.A.I.R.) and, ultimately, reproducible.  
 
 *There are many containerization tools and standards, such as [Docker](https://www.docker.com/) and [Singularity]( https://www.sylabs.io/singularity/). We will focus solely on Docker, which is considered the de facto standard by many in the field.  
-
-## Before you start
-* System requirements
-    * A computer running Linux, macOS, or Windows operating system or a cloud-based virtual machine (VM) running Linux.
-    * Basic example - any modern computer or virtual machine instance available on the GCP, including the f1-micro [(free-tier)]( https://cloud.google.com/free/) instance.
-    * Advanced use case - recommended system requirements: 16 CPUs, >=60GB memory and 200GB hard disk space. (Please refer to the [benchmark](#blast-docker-image-benchmarks) section below and pages 13-15 in this [NCBI presentation](https://ftp.ncbi.nlm.nih.gov/pub/education/public_webinars/2018/10Oct03_Using_BLAST/Using_BLAST_Well2.pdf)). 
-
-*Please note: Docker is not available on many high-performance computing (HPC) resources, such as the NIH [Biowulf.](https://hpc.nih.gov/systems/) Consult your system administrator if you intend to run this tutorial on HPC.*  
-
-The examples in this repository have been developed and tested using Linux Ubuntu 18.04LTS on Google Cloud Platform (GCP) compute instance virtual machines (VMs).   
-
-* Software requirements
-    * Docker (In our test, version 18.09.2 was installed by Ubuntu's package manager as described below)
-    
-* Architecture
-    * BLAST+ supports AMD64 architecture.
-
-Steps to create a VM on the GCP - 
-1. Sign up for a Google account, if you don't have one.  
-2. Sign in at [Google Cloud Platform Console](https://console.cloud.google.com/).  
-GCP automatically creates the first project called “My First Project.”
-3. Create a [billing account.](https://cloud.google.com/billing/docs/how-to/manage-billing-account)  
-*Please note: GCP offers credits and free resources for users. Please refer to [GCP Free Tier](https://cloud.google.com/free/).*
-4. Create a Compute Engine [VM instance](https://cloud.google.com/compute/docs/quickstart-linux) with Ubuntu 18.04 LTS.
-
-Detailed instructions for creating a GCP account and launching a VM can be found [here.](https://cloud.google.com/compute/docs/quickstart-linux)  
-
-*Please note: if you have a job that will take several hours, but less than 24 hours, you can potentially take advantage of [preemptible VMs](https://cloud.google.com/compute/docs/instances/preemptible), which cost much less.*  
-
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.  
-
-# Quick Start Guide – A Basic Example
+  
+# Quick Start Guide – A small example
    
-This section provides a quick run-through of a BLAST analysis using a very small sample query and a small database. If you are already familiar with the basics of cloud computing and Docker, you can run the entire analysis in this section.  More detailed descriptions of analysis steps, alternative commands and  more advanced topics are covered in the remaining sections of this documentation.  
+This section provides a quick run-through of a BLAST analysis using a very small sample query, a small custom database and the Protein Data Bank (PDB) protein database. If you are already familiar with the basics of cloud computing and Docker, you can run the entire analysis in this section.  More detailed descriptions of analysis steps, alternative commands and  more advanced topics are covered in the remaining sections of this documentation.  
   
-Input data
+Input data 
 * Query – 1 sequence, 44 nucleotides, file size 0.2 KB
-* Database – 7 sequences, 922 nucleotides, file size 1.7 KB   
+* Database
+    * 7 sequences, 922 nucleotides, file size 1.7 KB
+    * PDB protein database (pdb_v5) 0.2945 GB 
+
+Compute resources  
   
-This section can be completed using the GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.    
+To use the following compute resources, you need to sign in at [Google Cloud Platform Console](https://console.cloud.google.com/).  Upon signing in, GCP automatically creates the first project called “My First Project.”
 
+[Google Cloud Shell](https://cloud.google.com/shell/docs/features) is an interactive shell environment using a g1-small VM with Docker pre-installed but is subject to [usage limitations](https://cloud.google.com/shell/docs/limitations).  While it is designed as a tool to manage resources on the GCP, it can be used to run the following small example without having to set up a billing account.  Follow [these steps](https://cloud.google.com/shell/docs/starting-cloud-shell) to start a Cloud Shell session.
+  
+As an alternative, this section can be completed using a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.  Detailed description for setting up the VM is described in the [next section.](#before-you-start) For this example, you can use an f1-micro VM running Ubuntu 18.04 LTS in the us-east region. After creating the instance, click "SSH" in the GCP console to [connect to the instance](https://cloud.google.com/compute/docs/ssh-in-browser) from the browser.   
+  
+You can run commands in this respostiroy by using copy-and-paste.  In Windows or Unix/Linux, use the keyboard shortcut `Control+C` to copy and `Control+V` to paste.  On a Mac, use `Command+C` to copy and `Command+V` to paste.
+   
 ```
-# Time needed to complete this section: 10 minutes
-
-# Compute resources
-# GCP f1-micro instance: 1 shared vCPUs, 0.6GB memory, 10GB standard persistent disk
-# Zone: us-east4-c, OS: Ubuntu 18.04 LTS
-
-# After creating the instance, click "SSH" in the GCP console to connect to the instance.
-# (https://cloud.google.com/compute/docs/ssh-in-browser) 
-
+# Time needed to complete this section: <10 minutes
 
 # Step 1. Install Docker
+# This step is optional if using the Cloud Shell
 sudo snap install docker
 sudo apt update
 sudo apt install -y docker.io
@@ -137,21 +110,90 @@ docker run --rm \
     -parse_seqids -out nurse-shark-proteins -title "Nurse shark proteins" \
     -taxid 7801 -blastdb_version 5
     
-# Step 3. Run BLAST+ 
+## Step 3. Run BLAST+ 
 docker run --rm \
     -v $HOME/blastdb:/blast/blastdb:ro \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
     -v $HOME/queries:/blast/queries:ro \
     -v $HOME/results:/blast/results:rw \
     ncbi/blast \
-    blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins \
-    -out /blast/results/blastp.out
+    blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins
+    
+## Ouput on screen
+## Scroll up to see the entire output
 ```
-
-At this point, you should see the output file ```$HOME/results/blastp.out```. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96. To visualize the content of this output file, use the command, ```cat $HOME/results/blastp.out```.  
-
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.
   
+At this point, you should see the output on the screen. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96.  
+  
+For larger analysis, it is recommended to use the `-out` flag to save the output to a file.  For example, append `-out /blast/results/blastp.out` to the last command in Step 3 above and visualize the content of this output file using `cat $HOME/results/blastp.out`.  
+
+You can also query P01349.fsa against the PDB as shown in the following code block.
+
+```
+## Extend the example to query against the Protein Data Bank
+## Time needed to complete this section: <10 minutes
+
+## Confirm query
+ls queries/P01349.fsa
+
+## Display databases available for download from the GCP
+docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp
+
+## Download Protein Data Bank Version 5 database (pdb_v5)
+docker run --rm \
+     -v $HOME/blastdb:/blast/blastdb:rw \
+     -w /blast/blastdb \
+     ncbi/blast \
+     update_blastdb.pl --source gcp pdb_v5
+
+## Run BLAST+ 
+docker run --rm \
+     -v $HOME/blastdb:/blast/blastdb:ro \
+     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+     -v $HOME/queries:/blast/queries:ro \
+     -v $HOME/results:/blast/results:rw \
+     ncbi/blast \
+     blastp -query /blast/queries/P01349.fsa -db pdb_v5
+
+## Ouput on screen
+## Scroll up to see the entire output
+```
+   
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.  
+  
+
+## Before you start
+* System requirements
+    * A computer running Linux, macOS, or Windows operating system or a cloud-based virtual machine (VM) running Linux.
+    * Basic example - any modern computer or virtual machine instance available on the GCP, including the f1-micro [(free-tier)]( https://cloud.google.com/free/) instance.
+    * Advanced use case - recommended system requirements: 16 CPUs, >=60GB memory and 200GB hard disk space. (Please refer to the [benchmark](#blast-docker-image-benchmarks) section below and pages 13-15 in this [NCBI presentation](https://ftp.ncbi.nlm.nih.gov/pub/education/public_webinars/2018/10Oct03_Using_BLAST/Using_BLAST_Well2.pdf)). 
+
+*Please note: Docker is not available on many high-performance computing (HPC) resources, such as the NIH [Biowulf.](https://hpc.nih.gov/systems/) Consult your system administrator if you intend to run this tutorial on HPC.*  
+
+The examples in this repository have been developed and tested using Linux Ubuntu 18.04LTS on Google Cloud Platform (GCP) compute instance virtual machines (VMs).   
+
+* Software requirements
+    * Docker (In our test, version 18.09.2 was installed by Ubuntu's package manager as described below)
+    
+* Architecture
+    * BLAST+ supports AMD64 architecture.
+
+Steps to create a VM on the GCP - 
+1. Sign up for a Google account, if you don't have one.  
+2. Sign in at [Google Cloud Platform Console](https://console.cloud.google.com/).  
+GCP automatically creates the first project called “My First Project.”
+3. Create a [billing account.](https://cloud.google.com/billing/docs/how-to/manage-billing-account)  
+*Please note: GCP offers credits and free resources for users. Please refer to [GCP Free Tier](https://cloud.google.com/free/).*
+4. Create a Compute Engine [VM instance](https://cloud.google.com/compute/docs/quickstart-linux) with Ubuntu 18.04 LTS.
+
+Detailed instructions for creating a GCP account and launching a VM can be found [here.](https://cloud.google.com/compute/docs/quickstart-linux) 
+  
+*Creating a VM in the same region as storage can provide better performance. We recommend creating a VM in the us-east region.*  
+  
+*Please note: if you have a job that will take several hours, but less than 24 hours, you can potentially take advantage of [preemptible VMs](https://cloud.google.com/compute/docs/instances/preemptible), which cost much less.*  
+
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.    
+    
 # A Step-by-Step Guide using Docker and BLAST
 In this section, we will cover Docker installation, discuss various `docker run` command options, and examine the structure of a Docker command.  We will use the same basic example and explore alternative approaches in running the BLAST+ Docker image.
 
@@ -159,11 +201,12 @@ Input data
 * Query – 1 sequence, 44 nucleotides, file size 0.2 KB
 * Database – 7 sequences, 922 nucleotides, file size 1.7 KB
 
-This section can be completed using the GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.
+This section can be completed using the Google Cloud Shell](https://cloud.google.com/shell/docs/features) or a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.
   
 ## Step 1. Install Docker
 ```
 ## Run these commands to install Docker and add non-root users to run Docker
+## This step is optional if using the Cloud Shell
 sudo snap install docker
 sudo apt update
 sudo apt install -y docker.io
