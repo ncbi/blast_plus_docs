@@ -248,7 +248,8 @@ The first part of the command `docker run --rm ncbi/blast` is an instruction to 
   
 The second part of the command makes the query sequence data accessible in the container. [Docker bind mounts]( https://docs.docker.com/storage/bind-mounts/) uses `-v` to mount the local directories to directories inside the container and provide access permission rw (read and write) or ro (read only). For instance, assuming your query sequences are stored in the $HOME/fasta directory on the local host, you can use the following parameter to make that directory accessible inside the container in /blast/fasta as a read-only directory `-v $HOME/fasta:/blast/fasta:ro`.  
   
-The third part of the command is the BLAST+ command. In this case, it is executing makeblastdb to create BLAST database files.     
+The third part of the command is the BLAST+ command. In this case, it is executing makeblastdb to create BLAST database files.  
+  
 You can start an interactive bash session for this image by using `docker run -it ncbi/blast /bin/bash`. For the BLAST+ Docker image, the executables are in the folder /blast/bin and /root/edirect and added to the variable $PATH.  
   
 For additional documentation on the `docker run` command, please refer to [documentation](https://docs.docker.com/engine/reference/commandline/run/).  
