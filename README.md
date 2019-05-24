@@ -73,7 +73,7 @@ To use the following compute resources, you need to sign in at [Google Cloud Pla
   
 As an alternative, this section can be completed using a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.  Detailed description for setting up the VM is described in the [next section.](#before-you-start) For this example, you can use an f1-micro VM running Ubuntu 18.04 LTS in the us-east region. After creating the instance, click "SSH" in the GCP console to [connect to the instance](https://cloud.google.com/compute/docs/ssh-in-browser) from the browser.   
   
-You can run commands in this respostiroy by using copy-and-paste.  In Windows or Unix/Linux, use the keyboard shortcut `Control+C` to copy and `Control+V` to paste.  On a Mac, use `Command+C` to copy and `Command+V` to paste.
+You can run commands in this respository by using copy-and-paste.  In Windows or Unix/Linux, use the keyboard shortcut `Control+C` to copy and `Control+V` to paste.  On a Mac, use `Command+C` to copy and `Command+V` to paste.
    
 ```
 # Time needed to complete this section: <10 minutes
