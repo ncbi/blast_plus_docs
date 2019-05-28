@@ -198,7 +198,7 @@ Input data
 * Query – 1 sequence, 44 nucleotides, file size 0.2 KB
 * Database – 7 sequences, 922 nucleotides, file size 1.7 KB
 
-This section can be completed using the Google Cloud Shell](https://cloud.google.com/shell/docs/features) or a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.
+This section can be completed using the [Google Cloud Shell](https://cloud.google.com/shell/docs/features) or a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.
   
 ## Step 1. Install Docker
 ```
