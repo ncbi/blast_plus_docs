@@ -155,13 +155,10 @@ Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-in
 
 ## Before you start
 * System requirements
-    * A computer running Linux, macOS, or Windows operating system or a cloud-based virtual machine (VM) running Linux.
-    * Basic example - any modern computer or virtual machine instance available on the GCP, including the f1-micro [(free-tier)]( https://cloud.google.com/free/) instance.
+    * A GCP virtual machine (VM) running **Ubuntu 18.04LTS**.  
     * Advanced use case - recommended system requirements: 16 CPUs, >=60GB memory and 200GB hard disk space. (Please refer to the [benchmark](#blast-docker-image-benchmarks) section below and pages 13-15 in this [NCBI presentation](https://ftp.ncbi.nlm.nih.gov/pub/education/public_webinars/2018/10Oct03_Using_BLAST/Using_BLAST_Well2.pdf)). 
 
-*Please note: Docker is not available on many high-performance computing (HPC) resources, such as the NIH [Biowulf.](https://hpc.nih.gov/systems/) Consult your system administrator if you intend to run this tutorial on HPC.*  
-
-The examples in this repository have been developed and tested using Linux Ubuntu 18.04LTS on Google Cloud Platform (GCP) compute instance virtual machines (VMs).   
+*Please note: Docker is not available on many high-performance computing (HPC) resources, such as the NIH [Biowulf.](https://hpc.nih.gov/systems/) Consult your system administrator if you intend to run this tutorial on HPC.*    
 
 * Software requirements
     * Docker (In our test, version 18.09.2 was installed by Ubuntu's package manager as described below)
