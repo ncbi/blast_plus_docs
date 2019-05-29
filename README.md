@@ -1,17 +1,17 @@
 # Official NCBI BLAST+ Docker image
 
-This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform using a basic example and a more advanced use case.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
+This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
   
 ***This is only a preview draft of the documentation. Please continue to check this site for the latest updates!***
 
 ## Table of Contents
 
    * [What is NCBI BLAST?](#what-is-ncbi-blast)
-   * [What is cloud computing?](#what-is-cloud-computing)
+   * [What is Cloud Computing?](#what-is-cloud-computing)
    * [What is Docker?](#what-is-docker)
-   * [Getting Started Using the BLAST+ Docker Image with A Small Example](#getting-started-using-the-blast-docker-image-with-a-small-example)     
-   * [System Setup](#system-setup)  
-   * [A Step-by-Step Guide Using the BLAST+ Docker Image](#a-step-by-step-guide-using-the-blast-docker-image)
+   * [Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example](#section-1---getting-started-using-the-blast-docker-image-with-a-small-example)     
+   * [Google Cloud Platform Setup](#google-cloud-platform-setup)  
+   * [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image)
        * [Step 1. Install Docker](#step-1-install-docker)
            * [Docker command options](#docker-command-options)
            * [Docker command structure](#docker-command-structure)
@@ -19,13 +19,13 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [Using BLAST+ with Docker](#using-blast-with-docker)
            * [Versions of BLAST+ Docker image](#versions-of-blast-docker-image)
            * [Supported tags](#supported-tags)
-       * [Step 2. Import sequences and create a BLAST database](#step-2-import-sequences-and-create-a-blast-database)
+       * [Step 2. Import sequences and create a BLAST database](#step-2---import-sequences-and-create-a-blast-database)
            * [Show BLAST databases available for download from NCBI](#show-blast-databases-available-for-download-from-ncbi)
            * [Show BLAST databases available for download from the Google Cloud bucket](#show-blast-databases-available-for-download-from-the-google-cloud-bucket)
            * [Show available BLAST databases on local host](#show-available-blast-databases-on-local-host)
        * [Step 3. Run BLAST](#step-3-run-blast)
        * [Stop the GCP instance](#stop-the-gcp-instance)
-   * [Advanced Use Case](#advanced-use-case)
+   * [Section 3 - Using the BLAST+ Docker Image at Production Scale](#section-3---using-the-blast-docker-image-at-production-scale)
        * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
        * [Commands](#commands)
    * [Additional Resources](#additional-resources)
@@ -52,7 +52,7 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
 
 *There are many containerization tools and standards, such as [Docker](https://www.docker.com/) and [Singularity]( https://www.sylabs.io/singularity/). We will focus solely on Docker, which is considered the de facto standard by many in the field.  
   
-# Getting Started Using the BLAST+ Docker Image with A Small Example
+# Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example
    
 This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those that just want an understanding of the principles of the solution.  The Google Cloud Shell, an interactive shell environment will be used for this example which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
 More detailed descriptions of analysis steps, alternative commands and more advanced topics are covered in the later sections of this documentation.  
@@ -165,45 +165,88 @@ exit
 You have now completed a simple task and you have seen how the solution works.  If this is a solution that you want to try with alternative approaches, learn more advanced topics on Docker and run BLAST at production scale, please proceed to the next section.  
   
 
-# System Setup
-* System requirements
-    * A GCP virtual machine (VM) running **Ubuntu 18.04LTS**.  
-    * Advanced use case - recommended system requirements: 16 CPUs, >=60GB memory and 200GB hard disk space. (Please refer to the [benchmark](#blast-docker-image-benchmarks) section below and pages 13-15 in this [NCBI presentation](https://ftp.ncbi.nlm.nih.gov/pub/education/public_webinars/2018/10Oct03_Using_BLAST/Using_BLAST_Well2.pdf)). 
-
-*Please note: Docker is not available on many high-performance computing (HPC) resources, such as the NIH [Biowulf.](https://hpc.nih.gov/systems/) Consult your system administrator if you intend to run this tutorial on HPC.*  
-
-The examples in this repository have been developed and tested using Linux Ubuntu 18.04LTS on Google Cloud Platform (GCP) compute instance virtual machines (VMs).   
-
-* Software requirements
-    * Docker (In our test, version 18.09.2 was installed by Ubuntu's package manager as described below)
-    
-* Architecture
-    * BLAST+ supports AMD64 architecture.
-
-Steps to create a VM on the GCP - 
-1. Sign up for a Google account, if you don't have one.  
-2. Sign in at [Google Cloud Platform Console](https://console.cloud.google.com/).  
-GCP automatically creates the first project called “My First Project.”
-3. Create a [billing account.](https://cloud.google.com/billing/docs/how-to/manage-billing-account)  
-*Please note: GCP offers credits and free resources for users. Please refer to [GCP Free Tier](https://cloud.google.com/free/).*
-4. Create a Compute Engine [VM instance](https://cloud.google.com/compute/docs/quickstart-linux) with Ubuntu 18.04 LTS.
-
-Detailed instructions for creating a GCP account and launching a VM can be found [here.](https://cloud.google.com/compute/docs/quickstart-linux) 
+# Google Cloud Platform Setup
+The following sections include instructions to create a Google virtual machine, install Docker, and run BLAST+ commands using the Docker image.  
   
-*Creating a VM in the same region as storage can provide better performance. We recommend creating a VM in the us-east region.*  
+In [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image), we will use the same small example from the previous section and discuss alternative approaches, additional useful Docker and BLAST+ commands, Docker command options and structures.  In [Section 3](#section-3---using-the-blast-docker-image-at-production-scale), we will demonstrate how to run the BLAST+ Docker image at production scale.  
   
-*Please note: if you have a job that will take several hours, but less than 24 hours, you can potentially take advantage of [preemptible VMs](https://cloud.google.com/compute/docs/instances/preemptible), which cost much less.*  
+First, you need to set up a GCP VM for analysis.  
+
+## Requirements
+* A Google Cloud Platform (GCP) account linked to a billing account
+* A GCP virtual machine (VM) running Ubuntu 18.04LTS
+
+## Set up your GCP account and create a VM for analysis
+  
+### 1. Creating your GCP account and registering for the free $300 credit program. (If you already have a GCP billing account, you can skip to step 2.)
+
+* First, in a separate browser window or tab, sign in at https://console.cloud.google.com/
+    * If you need to create one, go to https://cloud.google.com/ and click “Get started for free” to sign up for a trial account.
+    * If you have multiple Google accounts, sign-in using an Incognito Window (Chrome) or Private Window (Safari) or any other private browser window.
+     
+GCP is currently offering a $300 credit, which expires 12 months from activation, to incentivize new cloud users. The following steps will show you how to activate this credit.
+You will be asked for billing information, but GCP will not auto-charge you once the trial ends; you must elect to manually upgrade to a paid account.
+  
+* After signing in, click **Activate** to activate the $300 credit.
+![GCP credit](images/gcp-credit.png)
+
+* Enter your country, for example, **United States** and check the box indicating that you have read and accept the terms of service.
+* Under “Account type,” select “Individual”. (This may be pre-selected in your Google account)
+* Enter your name and address.
+* Under “How you pay, select “Automatic payments”. (This may be pre-selected in your Google acount)
+This indicates that you will pay costs after you have used the service, either when you have reached your billing threshold or every 30 days, whichever comes first.  
+  
+* Under “Payment method,” select “add a credit or debit card” and enter your credit card information.
+You will not be automatically charged once the trial ends. You must elect to upgrade to a paid account before your payment method will be charged.  
+  
+* Click “Start my free trial” to finish registration. When this process is completed, you should see a GCP welcome screen. 
+  
+### 2. Create a Virtual Machine (VM)  
+* On the GCP welcome screen from the last step, click "Compute Engine" or navigate to the "Compute Engine" section by clicking on the navigation menu with the "hamburger icon" (three horizontal lines) on the top left corner.  
+<img align="left " width="300" src="images/gcp-instance.png" alt="GCP instance">   
+  
+* Click on the blue “CREATE INSTANCE” button on the top bar.  
+* Create an image with the following parameters: (if parameter is not list below, keep the default setting)
+    * Name: keep the default or enter a name
+    * Region: **us-east4 (Northern Virginia)**   
+    * For Section 2, change the following setting - 
+        * Machine Type: **micro (1 shared vCPU), 0.6 GB memory, f1-micro**
+        * Boot Disk: Click "Change," select **Ubuntu 18.04 LTS** and click "Select" (Boot disc size is default 10 GB).
+    * For Section 3, use the following settings - 
+        * Machine Type: **16 vCPU, 104 GB memory, n1-highmem-16**
+        * Boot Disk: Click "Change" and select **Ubuntu 18.04 LTS**, change the "Boot disk size" to **200 GB** Standard persistent disk and click "Select". 
+
+At this point, you should see a cost estimate for this instance on the right side of your window.  
+![GCP VM cost](images/gcp-vm-cost.png)  
+   
+* Click the blue “Create” button. This will create and start the VM.  
+  
+*Please note: Creating a VM in the same region as storage can provide better performance. We recommend creating a VM in the us-east4 region.*
+  
+*Please note: if you have a job that will take several hours, but less than 24 hours, you can potentially take advantage of [preemptible VMs.](https://cloud.google.com/compute/docs/instances/preemptible)*
+  
+Detailed instructions for creating a GCP account and launching a VM can be found [here.](https://cloud.google.com/compute/docs/quickstart-linux)
+   
+### 3. Access a GCP VM from a local machine
+
+Once you have your VM created, you must access it from your local computer. There are many methods to access your VM depending on the ways in which you would like to use it. On the GCP, the most straightforward way is to SSH from the browser.
+
+* Connect to your new VM instance by clicking the "SSH" button
+![GCP SSH](images/gcp-ssh.png)
+
+You now have a command shell running and you are ready to proceed.
 
 Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.    
     
-# A Step-by-Step Guide Using the BLAST+ Docker Image
-In this section, we will cover Docker installation, discuss various `docker run` command options, and examine the structure of a Docker command.  We will use the same basic example and explore alternative approaches in running the BLAST+ Docker image.
+    
+# Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image
+In this section, we will cover Docker installation, discuss various `docker run` command options, and examine the structure of a Docker command.  We will use the same small example from Section 1 and explore alternative approaches in running the BLAST+ Docker image.
 
 Input data
 * Query – 1 sequence, 44 nucleotides, file size 0.2 KB
 * Database – 7 sequences, 922 nucleotides, file size 1.7 KB
 
-This section can be completed using the [Google Cloud Shell](https://cloud.google.com/shell/docs/features) or a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.
+This section can be completed using the [Google Cloud Shell](https://cloud.google.com/shell/docs/features) as described in Section 1 or a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.
   
 ## Step 1. Install Docker
 ```
@@ -474,7 +517,7 @@ docker stop blast
 ## Stop the GCP instance
 Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.   
   
-# Advanced Use Case
+# Section 3 - Using the BLAST+ Docker Image at Production Scale
 One of the promises of cloud computing is scalability. In this section, we will demonstrate how to use the BLAST+ Docker image at production scale on the Google Cloud Platform. We will perform a BLAST analysis similar to the approach described in this [publication](https://www.ncbi.nlm.nih.gov/pubmed/31040829) to compare de novo aligned contigs from bacterial 16S-23S sequencing against the nucleotide collection (nt) database.
 
 To test scalability we will use inputs of different sizes to estimate the amount of time to download the nucleotide collection database and run BLAST search using the latest version of the BLAST+ Docker image. Expected results are summarized in the following tables.
@@ -671,4 +714,3 @@ gcloud compute scp $HOME/script.out instance-1:~
 
 gcloud compute scp instance-1:~/script.out $HOME/.
 ```
-
