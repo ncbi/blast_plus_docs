@@ -209,10 +209,10 @@ You will not be automatically charged once the trial ends. You must elect to upg
 * Create an image with the following parameters: (if parameter is not list below, keep the default setting)
     * Name: keep the default or enter a name
     * Region: **us-east4 (Northern Virginia)**   
-    * For Section 2, change the following setting - 
+    * For Section 2, change these settings - 
         * Machine Type: **micro (1 shared vCPU), 0.6 GB memory, f1-micro**
         * Boot Disk: Click "Change," select **Ubuntu 18.04 LTS** and click "Select" (Boot disc size is default 10 GB).
-    * For Section 3, use the following settings - 
+    * For Section 3, change these settings - 
         * Machine Type: **16 vCPU, 104 GB memory, n1-highmem-16**
         * Boot Disk: Click "Change" and select **Ubuntu 18.04 LTS**, change the "Boot disk size" to **200 GB** Standard persistent disk and click "Select". 
 
