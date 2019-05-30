@@ -13,27 +13,29 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
    * [Google Cloud Platform Setup](#google-cloud-platform-setup)  
    * [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image)
        * [Step 1. Install Docker](#step-1-install-docker)
-           * [Docker command options](#docker-command-options)
-           * [Docker command structure](#docker-command-structure)
+           * [Docker `run` command options](#docker-run-command-options)
+           * [Docker `run` command structure](#docker-run-command-structure)
            * [Useful Docker commands](#useful-docker-commands)
            * [Using BLAST+ with Docker](#using-blast-with-docker)
            * [Versions of BLAST+ Docker image](#versions-of-blast-docker-image)
            * [Supported tags](#supported-tags)
        * [Step 2. Import sequences and create a BLAST database](#step-2---import-sequences-and-create-a-blast-database)
-           * [Show BLAST databases available for download from NCBI](#show-blast-databases-available-for-download-from-ncbi)
            * [Show BLAST databases available for download from the Google Cloud bucket](#show-blast-databases-available-for-download-from-the-google-cloud-bucket)
+           * [Show BLAST databases available for download from NCBI](#show-blast-databases-available-for-download-from-ncbi)
            * [Show available BLAST databases on local host](#show-available-blast-databases-on-local-host)
        * [Step 3. Run BLAST](#step-3-run-blast)
        * [Stop the GCP instance](#stop-the-gcp-instance)
    * [Section 3 - Using the BLAST+ Docker Image at Production Scale](#section-3---using-the-blast-docker-image-at-production-scale)
+       * [Background](#background)
        * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
-       * [Commands](#commands)
+       * [Commands to run](#commands-to-run)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
    * [Appendix](#appendix)
        * [Appendix A. Cloud and Docker Concepts](#appendix-a-cloud-and-docker-concepts)
-       * [Appendix B. Transfer files to/from a GCP VM](#appendix-b-transfer-files-tofrom-a-gcp-vm)
+       * [Appendix B. Alternative Ways to Run Docker](#appendix-b-alternative-ways-to-run-docker)
+       * [Appendix C. Transfer files to/from a GCP VM](#appendix-c-transfer-files-tofrom-a-gcp-vm)
 
 # What is NCBI BLAST?
 
@@ -45,7 +47,7 @@ The National Center for Biotechnology Information (NCBI) Basic Local Alignment S
 Introduced in 2009, BLAST+ is an improved version of BLAST command line applications.  For a full description of the features and capabilities of BLAST+, please refer to the [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279690/).
 
 # What is Cloud Computing?
-Cloud computing offers potential cost savings by using on-demand, scalable, and elastic computational resources. While a detailed description of various cloud technologies and benefits is out of the scope for this repository, the following sections contain information needed to get started running the BLAST+ Docker image on the Google Cloud Platform [(GCP)]( https://cloud.google.com/).  
+Cloud computing offers potential cost savings by using on-demand, scalable, and elastic computational resources. While a detailed description of various cloud technologies and benefits is out of the scope for this repository, the following sections contain information needed to get started running the BLAST+ Docker image on the Google Cloud Platform [(GCP)]( https://cloud.google.com/). **Various relevant components of cloud computing are described in Appendix A below**
 
 # What is Docker?
 [Docker](https://www.docker.com/) is a tool to perform operating-system level virtualization using software containers. In containerization technology<sup>*</sup>, an image is a snapshot of an analytical environment encapsulating application(s) and dependencies. An image, which is essentially a file build from a list of instructions, can be saved and easily shared for others to recreate the exact analytical environment across platforms and operating systems. A container is a runtime instance of an image. By using containerization, users can bypass the often-complicated steps in compiling, configuring and installing a Unix-based tool like BLAST+. In addition to portability, containerization is a light-weight approach to make analysis more findable, accessible, interoperable, reusable (F.A.I.R.) and, ultimately, reproducible.  
@@ -235,18 +237,17 @@ Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-in
     
     
 # Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image
-In this section, we will cover Docker installation, discuss various `docker run` command options, and examine the structure of a Docker command.  We will use the same small example from Section 1 and explore alternative approaches in running the BLAST+ Docker image.
+In this section, we will cover Docker installation, discuss various `docker run` command options, and examine the structure of a Docker command.  We will use the same small example from Section 1 and explore alternative approaches in running the BLAST+ Docker image. However, we are using a real VM instance which provides greater performance and functionality than the Google Cloud Shell.
 
 Input data
 * Query – 1 sequence, 44 nucleotides, file size 0.2 KB
 * Database – 7 sequences, 922 nucleotides, file size 1.7 KB
-
-This section can be completed using the [Google Cloud Shell](https://cloud.google.com/shell/docs/features) as described in Section 1 or a GCP f1-micro [free-tier](https://cloud.google.com/free/) instance.
-  
+   
 ## Step 1. Install Docker
+In a production system, Docker has to be installed as an application.  
+
 ```
 ## Run these commands to install Docker and add non-root users to run Docker
-## This step is optional if using the Cloud Shell
 sudo snap install docker
 sudo apt update
 sudo apt install -y docker.io
@@ -254,9 +255,9 @@ sudo usermod -aG docker $USER
 exit
 # exit and SSH back in for changes to take effect
 ```
-If Docker has been installed correctly, the command `docker run hello-world` should produce ["Hello from Docker! ..."](https://docs.docker.com/samples/library/hello-world/)  
+To confirm the correct installation of Docker, run the command `docker run hello-world`. If correctly installed, you should see "Hello from Docker!..."(https://docs.docker.com/samples/library/hello-world/)  
   
-### Docker command options
+### Docker run command options
 *This section is optional.*    
   
 Below is a list of `docker run` command line [options](https://docs.docker.com/engine/reference/commandline/run/) used in this tutorial.
@@ -267,7 +268,7 @@ Below is a list of `docker run` command line [options](https://docs.docker.com/e
 |`--volume` , `-v`|Bind mount a volume|
 |`--workdir` , `-w`| Working directory inside the container|
 
-### Docker command structure
+### Docker run command structure
 *This section is optional.*  
  
 For this tutorial, it would be useful to understand the structure of a Docker command. The following command consists of three parts.
@@ -288,7 +289,7 @@ docker run --rm ncbi/blast \
   
 The first part of the command `docker run --rm ncbi/blast` is an instruction to run the docker image `ncbi/blast` and remove the container when the run is completed.  
   
-The second part of the command makes the query sequence data accessible in the container. [Docker bind mounts]( https://docs.docker.com/storage/bind-mounts/) uses `-v` to mount the local directories to directories inside the container and provide access permission rw (read and write) or ro (read only). For instance, assuming your query sequences are stored in the $HOME/fasta directory on the local host, you can use the following parameter to make that directory accessible inside the container in /blast/fasta as a read-only directory `-v $HOME/fasta:/blast/fasta:ro`.  
+The second part of the command makes the query sequence data accessible in the container. [Docker bind mounts]( https://docs.docker.com/storage/bind-mounts/) uses `-v` to mount the local directories to directories inside the container and provide access permission rw (read and write) or ro (read only). For instance, assuming your subject sequences are stored in the $HOME/fasta directory on the local host, you can use the following parameter to make that directory accessible inside the container in /blast/fasta as a read-only directory `-v $HOME/fasta:/blast/fasta:ro`.  The `-w /blast/blastdb_custom` flag sets the working directory inside the container.
   
 The third part of the command is the BLAST+ command. In this case, it is executing makeblastdb to create BLAST database files.  
   
@@ -299,29 +300,20 @@ For additional documentation on the `docker run` command, please refer to [docum
 ### Useful Docker commands
 *This section is optional.*  
   
-```
-# Show a list of containers
-docker ps -a
-
-# Remove all exited containers, if you have at least 1 exited container from the command above
-docker rm $(docker ps -q -f status=exited)
-
-# Remove a docker container
-docker rm <CONTAINER_ID>
-
-# Show a list of images
-docker images
-
-# Remove the ncbi/blast image
-docker rmi ncbi/blast
-```  
+| Docker Command | Description |
+| :----------------------------  | :---------- |
+|`docker ps -a`|Displays a list of containers|
+|`docker rm $(docker ps -q -f status=exited)`|Removes all exited containers, if you have at least 1 exited container|
+|`docker rm <CONTAINER_ID>`|Removes a container|
+|`docker images`|Displays a list of images|
+|`docker rmi <REPOSITORY (IMAGE_NAME)>`|Removes an image|
   
 ### Using BLAST+ with Docker
 *This section is optional.*    
   
 With this Docker image you can run BLAST+ in an isolated container, facilitating reproducibility of BLAST results. As a user of this Docker image, you are expected to provide BLAST databases and query sequence(s) to run BLAST
-as well as a location outside the container to save the results. The following is a list of directories used by BLAST+.
-
+as well as a location outside the container to save the results. The following is a list of directories used by BLAST+. You will create them in Step 2.  
+  
 | Directory | Purpose | Notes |
 | --------- | ------  | ----- |
 | `$HOME/blastdb` | Stores NCBI provided BLAST databases | If set to a _single, absolute_ path, the `$BLASTDB` environment variable could be used instead (see [Configuring BLAST via environment variables](https://www.ncbi.nlm.nih.gov/books/NBK279695/#_usermanual_Configuring_BLAST_via_environ_).) |
@@ -346,7 +338,7 @@ docker run --rm ncbi/blast:2.7.1 blastn -version
 docker images
 ```
 
-To use the BLAST+ version 2.7.1 Docker image instead of the latest version, replace the first part of the command
+For example, to use the BLAST+ version 2.7.1 Docker image instead of the latest version, replace the first part of the command
 
 ```docker run --rm ncbi/blast``` with ```docker run --rm ncbi/blast:2.7.1 ```
 
@@ -393,23 +385,21 @@ docker run --rm \
     -v $HOME/blastdb:/blast/blastdb:ro \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
     ncbi/blast \
-    blastdbcmd -entry all -db nurse-shark-proteins -outfmt "%a %l %C"
+    blastdbcmd -entry all -db nurse-shark-proteins -outfmt "%a %l %T"
 ```
-
-
+  
 As an alternative, you can also download preformatted BLAST databases from NCBI or the NCBI Google storage bucket.  
+   
+### Show BLAST databases available for download from the Google Cloud bucket  
+  
+```docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp```
+
+For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)
   
 ### Show BLAST databases available for download from NCBI  
 *This section is optional.*  
   
 ```docker run --rm ncbi/blast update_blastdb.pl --showall --source ncbi```  
-  
-### Show BLAST databases available for download from the Google Cloud bucket  
-*This section is optional.*   
-  
-```docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp```
-
-For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)
   
 ### Show available BLAST databases on local host 
 *This section is optional.*   
@@ -419,20 +409,31 @@ The command below mounts the `$HOME/blastdb` path on the local machine as
 databases at this location.  
   
 ```
+## Download Protein Data Bank Version 5 database (pdb_v5)
+docker run --rm \
+     -v $HOME/blastdb:/blast/blastdb:rw \
+     -w /blast/blastdb \
+     ncbi/blast \
+     update_blastdb.pl --source gcp pdb_v5
+
+## Display database(s) in $HOME/blastdb
 docker run --rm \
     -v $HOME/blastdb:/blast/blastdb:ro \
     ncbi/blast \
     blastdbcmd -list /blast/blastdb -remove_redundant_dbs
-
-# For the custom BLAST database used in this example -
+```
+  
+You should see an output `/blast/blastdb/pdb_v5 Protein`.  
+  
+```
+## For the custom BLAST database used in this example -
 docker run --rm \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
     ncbi/blast \
     blastdbcmd -list /blast/blastdb_custom -remove_redundant_dbs
-# Output
-# /blast/blastdb_custom/nurse-shark-proteins Protein
-```  
-  
+```
+You should see an output `/blast/blastdb_custom/nurse-shark-proteins Protein`.  
+   
 ## Step 3. Run BLAST
 When running BLAST in a Docker container, note the mounts specified to the `docker run` command to make the input and outputs accessible. In the examples below, the first two mounts provide access to the BLAST databases, the third
 mount provides access to the query sequence(s) and the fourth mount provides a directory to save the results. (Note the `:ro` and `:rw` options which mount the directories are read-only and read-write respectively.)  
@@ -447,72 +448,14 @@ docker run --rm \
     blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins \
     -out /blast/results/blastp.out
 ```  
-At this point, you should see the output file ```$HOME/results/blastp.out```. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96. To visualize the content of this output file, use the command, ```cat $HOME/results/blastp.out```.  
-
-*The following section is optional.* 
-  
-As an alternative, you can also run BLAST interactively inside a container.   
-  
-__When to use__: This is useful for running a few (e.g.: less than 5-10) BLAST searches on small BLAST databases where one expects the search to complete in seconds/minutes.  
-  
-```
-docker run --rm -it \
-    -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
-    -v $HOME/queries:/blast/queries:ro \
-    -v $HOME/results:/blast/results:rw \
-    ncbi/blast \
-    /bin/bash
-
-# Once you are inside the container (note the root prompt), run the following BLAST commands.
-blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins \
-    -out /blast/results/blastp.out
-
-# To view output, run the following command
-cat /blast/results/blastp.out
-
-# Leave container
-exit
-
-```
-
-In addition, you can also run BLAST in [detached mode](https://docs.docker.com/engine/reference/run/#detached--d) by running a container in the background.  
-
-__When to use__: This is a more practical approach if one has many (e.g.: 10 or
-more) BLAST searches to run or one expects the search to take a long time to execute. In this case it may be better to start the blast container in detached mode and execute commands on it. 
-  
-**NOTE**: Be sure to mount _all_ required directories, as these need to be
-specified when the container is started.
-
-```
-# Start a container named 'blast' in detached mode
-docker run --rm -dit --name blast \
-    -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
-    -v $HOME/queries:/blast/queries:ro \
-    -v $HOME/results:/blast/results:rw \
-    ncbi/blast \
-    sleep infinity
-
-# Check the container is running in the background
-docker ps -a
-docker ps --filter "status=running"
-```
-Once the container is confirmed to be [running in detached mode](https://docs.docker.com/engine/reference/commandline/ps/), run the following BLAST command.
-  
-```
-docker exec blast blastp -query /blast/queries/P01349.fsa \
-    -db nurse-shark-proteins -out /blast/results/blastp.out
-
-# View output
-cat $HOME/results/blastp.out
-
-# stop the container
-docker stop blast
-```
+At this point, you should see the output file ```$HOME/results/blastp.out```. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96. To view the content of this output file, use the command, ```more $HOME/results/blastp.out```.    
 
 ## Stop the GCP instance
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.   
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost. You can do this at the GCP Console as shown below.
+![GCP instance stop](images/gcp-instance-stop.png)
   
 # Section 3 - Using the BLAST+ Docker Image at Production Scale
+## Background
 One of the promises of cloud computing is scalability. In this section, we will demonstrate how to use the BLAST+ Docker image at production scale on the Google Cloud Platform. We will perform a BLAST analysis similar to the approach described in this [publication](https://www.ncbi.nlm.nih.gov/pubmed/31040829) to compare de novo aligned contigs from bacterial 16S-23S sequencing against the nucleotide collection (nt) database.
 
 To test scalability we will use inputs of different sizes to estimate the amount of time to download the nucleotide collection database and run BLAST search using the latest version of the BLAST+ Docker image. Expected results are summarized in the following tables.
@@ -547,7 +490,7 @@ Please refer to GCP for more information on [machine types](https://cloud.google
 [regions and zones](https://cloud.google.com/compute/docs/regions-zones/) and [compute cost.](https://cloud.google.com/compute/pricing)
 
 
-## Commands
+## Commands to run
 ```
 ## Install Docker if not already done
 ## This section assumes using recommended hardware requirements below
@@ -677,11 +620,72 @@ As for any pre-built image usage, it is the image user's responsibility to ensur
 # Appendix
 ## Appendix A. Cloud and Docker Concepts
 ![Cloud-Docker-Simple](images/cloud-docker-simple.png)
-Figure 1. Docker and Cloud Computing Concept. Users can access compute resources provided by cloud service providers (CSP), such as the Google Cloud Platform, using SSH tunneling (1). When you create a VM (2), a hard disk (3) is attached to that VM. With the right permissions, VMs can also access other storage buckets (4) or other data repositories in the public domain. Once inside a VM with Docker installed, one can run a Docker image (5), such as NCBI's BLAST image. A image can be used to create multiple running instances or containers (6). Each container is in an isolated environment. In order to make data accessible inside the container, you need to using Docker bind mounts (7) described in this tutorial. 
+Figure 1. Docker and Cloud Computing Concept. Users can access compute resources provided by cloud service providers (CSP), such as the Google Cloud Platform, using SSH tunneling (1). When you create a VM (2), a hard disk (also called a boot/persistent disk) (3) is attached to that VM. With the right permissions, VMs can also access other storage buckets (4) or other data repositories in the public domain. Once inside a VM with Docker installed, one can run a Docker image (5), such as NCBI's BLAST image. A image can be used to create multiple running instances or containers (6). Each container is in an isolated environment. In order to make data accessible inside the container, you need to using Docker bind mounts (7) described in this tutorial. 
 
 *A Docker image can be used to create a Singularity image.  Please refer to Singularity's [documentation](https://www.sylabs.io/singularity/) for more detail.*
 
-## Appendix B. Transfer files to/from a GCP VM
+## Appendix B. Alternative Ways to Run Docker
+  
+As an alternative to what is described above, you can also run BLAST interactively inside a container.   
+  
+__When to use__: This is useful for running a few (e.g.: less than 5-10) BLAST searches on small BLAST databases where one expects the search to complete in seconds/minutes.  
+  
+```
+docker run --rm -it \
+    -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+    -v $HOME/queries:/blast/queries:ro \
+    -v $HOME/results:/blast/results:rw \
+    ncbi/blast \
+    /bin/bash
+
+# Once you are inside the container (note the root prompt), run the following BLAST commands.
+blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins \
+    -out /blast/results/blastp.out
+
+# To view output, run the following command
+more /blast/results/blastp.out
+
+# Leave container
+exit
+
+```
+
+In addition, you can also run BLAST in [detached mode](https://docs.docker.com/engine/reference/run/#detached--d) by running a container in the background.  
+
+__When to use__: This is a more practical approach if one has many (e.g.: 10 or
+more) BLAST searches to run or one expects the search to take a long time to execute. In this case it may be better to start the blast container in detached mode and execute commands on it. 
+  
+**NOTE**: Be sure to mount _all_ required directories, as these need to be
+specified when the container is started.
+
+```
+# Start a container named 'blast' in detached mode
+docker run --rm -dit --name blast \
+    -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+    -v $HOME/queries:/blast/queries:ro \
+    -v $HOME/results:/blast/results:rw \
+    ncbi/blast \
+    sleep infinity
+
+# Check the container is running in the background
+docker ps -a
+docker ps --filter "status=running"
+```
+Once the container is confirmed to be [running in detached mode](https://docs.docker.com/engine/reference/commandline/ps/), run the following BLAST command.
+  
+```
+docker exec blast blastp -query /blast/queries/P01349.fsa \
+    -db nurse-shark-proteins -out /blast/results/blastp.out
+
+# View output
+more $HOME/results/blastp.out
+
+# stop the container
+docker stop blast
+```
+If you run into issues with `docker stop blast` command, reset the VM from the GCP Console or restart the SSH session.  
+
+## Appendix C. Transfer Files to/from a GCP VM
 
 To copy the file `$HOME/script.out` in the home directory on a local machine to the home directory on a GCP VM named `instance-1` in project `My First Project` using GCP Cloud SDK.
 
