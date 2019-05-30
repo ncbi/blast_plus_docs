@@ -155,7 +155,7 @@ docker run --rm \
      ncbi/blast \
      blastp -query /blast/queries/P01349.fsa -db pdb_v5
 
-## Ouput on screen
+## Output on screen
 ## Scroll up to see the entire output
 ## Leave the Cloud Shell
 
