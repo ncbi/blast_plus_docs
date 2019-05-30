@@ -80,7 +80,7 @@ The next step is to copy-and-paste the commands below in your Cloud Shell sessio
   
 *Please note: In the GitHub you can use your mouse to copy; however, in the command shell you must use your keyboard. In Windows or Unix/Linux, use the shortcut `Control+C` to copy and `Control+V` to paste. On macOS, use `Command+C` to copy and `Command+V` to paste.*   
 
-To scroll in the Cloud Shell, use the mouse wheel, use `Ctrl-Shift-PageUp` / `Ctrl-Shift-PageDn` (Windows and Linux) or `Fn-Shift-Up` / `Fn-Shift-Down` (on macOS) or enable scrollbar in `Terminal settings` with the wrench icon.
+To scroll in the Cloud Shell, enable the scrollbar in `Terminal settings` with the wrench icon.
 ![Cloud-Shell-wrench](images/cloud-shell-wrench.png)
 
 ```
@@ -125,7 +125,7 @@ docker run --rm \
   
 At this point, you should see the output on the screen. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96.  
   
-For larger analysis, it is recommended to use the `-out` flag to save the output to a file.  For example, append `-out /blast/results/blastp.out` to the last command in Step 3 above and visualize the content of this output file using `cat $HOME/results/blastp.out`.  
+For larger analysis, it is recommended to use the `-out` flag to save the output to a file.  For example, append `-out /blast/results/blastp.out` to the last command in Step 3 above and view the content of this output file using `more $HOME/results/blastp.out`.  
 
 You can also query P01349.fsa against the PDB as shown in the following code block.
 
@@ -135,9 +135,6 @@ You can also query P01349.fsa against the PDB as shown in the following code blo
 
 ## Confirm query
 ls queries/P01349.fsa
-
-## Display databases available for download from the GCP
-docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp
 
 ## Download Protein Data Bank Version 5 database (pdb_v5)
 docker run --rm \
@@ -162,7 +159,7 @@ docker run --rm \
 exit
 ```
 
-You have now completed a simple task and you have seen how the solution works.  If this is a solution that you want to try with alternative approaches, learn more advanced topics on Docker and run BLAST at production scale, please proceed to the next section.  
+You have now completed a simple task and seen how BLAST+ with Docker works. To learn about Docker and BLAST+ at production scale, please proceed to the next section.  
   
 
 # Google Cloud Platform Setup
