@@ -218,9 +218,7 @@ At this point, you should see a cost estimate for this instance on the right sid
    
 * Click the blue “Create” button. This will create and start the VM.  
   
-*Please note: Creating a VM in the same region as storage can provide better performance. We recommend creating a VM in the us-east4 region.*
-  
-*Please note: if you have a job that will take several hours, but less than 24 hours, you can potentially take advantage of [preemptible VMs.](https://cloud.google.com/compute/docs/instances/preemptible)*
+*Please note: Creating a VM in the same region as storage can provide better performance. We recommend creating a VM in the us-east4 region. If you have a job that will take several hours, but less than 24 hours, you can potentially take advantage of [preemptible VMs.](https://cloud.google.com/compute/docs/instances/preemptible)*
   
 Detailed instructions for creating a GCP account and launching a VM can be found [here.](https://cloud.google.com/compute/docs/quickstart-linux)
    
