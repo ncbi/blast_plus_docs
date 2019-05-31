@@ -120,7 +120,7 @@ docker run --rm \
     ncbi/blast \
     blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins
     
-## Ouput on screen
+## Output on screen
 ## Scroll up to see the entire output
 ## Type "exit" to leave the Cloud Shell or continue to the next section
 ```
