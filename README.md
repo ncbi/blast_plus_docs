@@ -458,7 +458,7 @@ Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-in
 ## Background
 One of the promises of cloud computing is scalability. In this section, we will demonstrate how to use the BLAST+ Docker image at production scale on the Google Cloud Platform. We will perform a BLAST analysis similar to the approach described in this [publication](https://www.ncbi.nlm.nih.gov/pubmed/31040829) to compare de novo aligned contigs from bacterial 16S-23S sequencing against the nucleotide collection (nt) database.
 
-To test scalability we will use inputs of different sizes to estimate the amount of time to download the nucleotide collection database and run BLAST search using the latest version of the BLAST+ Docker image. Expected results are summarized in the following tables.
+To test scalability, we will use inputs of different sizes to estimate the amount of time to download the nucleotide collection database and run BLAST search using the latest version of the BLAST+ Docker image. Expected results are summarized in the following tables.
 
 Input files: 28 samples (multi-FASTA files) containing de novo aligned contigs from the publication.  
 (Instructions to [download]((https://figshare.com/s/729b346eda670e9daba4)) and create the input files are described in the [code block](#commands) below.)    
@@ -620,7 +620,7 @@ As for any pre-built image usage, it is the image user's responsibility to ensur
 # Appendix
 ## Appendix A. Cloud and Docker Concepts
 ![Cloud-Docker-Simple](images/cloud-docker-simple.png)
-Figure 1. Docker and Cloud Computing Concept. Users can access compute resources provided by cloud service providers (CSP), such as the Google Cloud Platform, using SSH tunneling (1). When you create a VM (2), a hard disk (also called a boot/persistent disk) (3) is attached to that VM. With the right permissions, VMs can also access other storage buckets (4) or other data repositories in the public domain. Once inside a VM with Docker installed, one can run a Docker image (5), such as NCBI's BLAST image. A image can be used to create multiple running instances or containers (6). Each container is in an isolated environment. In order to make data accessible inside the container, you need to using Docker bind mounts (7) described in this tutorial. 
+Figure 1. Docker and Cloud Computing Concept. Users can access compute resources provided by cloud service providers (CSP), such as the Google Cloud Platform, using SSH tunneling (1). When you create a VM (2), a hard disk (also called a boot/persistent disk) (3) is attached to that VM. With the right permissions, VMs can also access other storage buckets (4) or other data repositories in the public domain. Once inside a VM with Docker installed, one can run a Docker image (5), such as NCBI's BLAST image. An image can be used to create multiple running instances or containers (6). Each container is in an isolated environment. In order to make data accessible inside the container, you need to using Docker bind mounts (7) described in this tutorial. 
 
 *A Docker image can be used to create a Singularity image.  Please refer to Singularity's [documentation](https://www.sylabs.io/singularity/) for more detail.*
 
