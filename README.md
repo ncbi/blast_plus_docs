@@ -216,7 +216,7 @@ You will not be automatically charged once the trial ends. You must elect to upg
         * Boot Disk: Click "Change" and select **Ubuntu 18.04 LTS**, change the "Boot disk size" to **200 GB** Standard persistent disk and click "Select". 
 
 At this point, you should see a cost estimate for this instance on the right side of your window.  
-![GCP VM cost](images/gcp-vm-cost.png)  
+![GCP VM cost](images/gcp-vm-cost1.png)  
    
 * Click the blue “Create” button. This will create and start the VM.  
   
