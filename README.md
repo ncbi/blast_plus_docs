@@ -233,7 +233,7 @@ Once you have your VM created, you must access it from your local computer. Ther
 
 You now have a command shell running and you are ready to proceed.
 
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.    
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/deleting-instance) the VM to prevent incurring additional cost.    
     
     
 # Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image
@@ -451,7 +451,7 @@ docker run --rm \
 At this point, you should see the output file ```$HOME/results/blastp.out```. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96. To view the content of this output file, use the command, ```more $HOME/results/blastp.out```.    
 
 ## Stop the GCP instance
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost. You can do this at the GCP Console as shown below.
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/deleting-instance) the VM to prevent incurring additional cost. You can do this at the GCP Console as shown below.
 ![GCP instance stop](images/gcp-instance-stop.png)
   
 # Section 3 - Using the BLAST+ Docker Image at Production Scale
@@ -585,7 +585,7 @@ docker run --rm \
 ## Stdout and stderr will be in script.out
 ## BLAST output will be in $HOME/results
 ``` 
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.  
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/deleting-instance) the VM to prevent incurring additional cost.  
 
 # Additional Resources
 * BLAST:
