@@ -461,7 +461,7 @@ One of the promises of cloud computing is scalability. In this section, we will 
 To test scalability, we will use inputs of different sizes to estimate the amount of time to download the nucleotide collection database and run BLAST search using the latest version of the BLAST+ Docker image. Expected results are summarized in the following tables.
 
 Input files: 28 samples (multi-FASTA files) containing de novo aligned contigs from the publication.  
-(Instructions to [download]((https://figshare.com/s/729b346eda670e9daba4)) and create the input files are described in the [code block](#commands) below.)    
+(Instructions to [download]((https://figshare.com/s/729b346eda670e9daba4)) and create the input files are described in the [code block](#commands-to-run) below.)    
   
 Database: Pre-formatted BLAST nucleotide collection database, version 5 (nt_v5): 68.7217 GB  
   
