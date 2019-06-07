@@ -233,7 +233,7 @@ Once you have your VM created, you must access it from your local computer. Ther
 
 You now have a command shell running and you are ready to proceed.
 
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/deleting-instance) the VM to prevent incurring additional cost.    
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost.    
     
     
 # Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image
@@ -451,7 +451,7 @@ docker run --rm \
 At this point, you should see the output file ```$HOME/results/blastp.out```. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96. To view the content of this output file, use the command, ```more $HOME/results/blastp.out```.    
 
 ## Stop the GCP instance
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/deleting-instance) the VM to prevent incurring additional cost. You can do this at the GCP Console as shown below.
+Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/stop-start-instance) the VM to prevent incurring additional cost. You can do this at the GCP Console as shown below.
 ![GCP instance stop](images/gcp-instance-stop.png)
   
 # Section 3 - Using the BLAST+ Docker Image at Production Scale
@@ -473,19 +473,22 @@ Database: Pre-formatted BLAST nucleotide collection database, version 5 (nt_v5):
 
 
 ## BLAST+ Docker image benchmarks  
-| VM Type/Zone | CPU | Memory (GB) | Hourly Cost* | Download nt (min) | Analysis 1 (min) | Analysis 2 (min) | Analysis 3 (min)|
-| :-: | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| n1-standard-8 us-east4c | 8 | 30 | $0.312 | 9 | 22 | - | - |
-| n1-standard-16 us-east4c | 16 | 60 | $0.611 | 9 | 14 | 53 | 205 |
-| n1-highmem-16 us-east4c | 16 | 104 | $0.767 | 9 | 9 | 30 | 143 |
-| n1-highmem-16 us-west2a  | 16 | 104 | $0.809 | 11 | 9 | 30 | 147 |
-| n1-highmem-16 us-west1b | 16 | 104 | $0.674 | 11 | 9 | 30 | 147 |
-| BLAST website (blastn) | - | - | - | - | Failed after a few minutes  | Failed after a few minutes  | Failed after 8 hours |
-   
-*Hourly costs were provided by Google Cloud Platform (May 2019) when VMs were created and are subject to change. 
-    
-All GCP instances are configured with a 200 GB of persistent standard disk.  
+| VM Type/Zone | CPU | Memory (GB) | Hourly Cost* | Download nt (min) | Analysis 1 (min) | Analysis 2 (min) | Analysis 3 (min)| Total Cost**
+| :-: | :---: | :---: | :---: | :---: | :---: | :---: | :---: | :--: |
+| n1-standard-8 us-east4c | 8 | 30 | $0.312 | 9 | 22 | - | - | - |
+| n1-standard-16 us-east4c | 16 | 60 | $0.611 | 9 | 14 | 53 | 205 | $2.86 |
+| n1-highmem-16 us-east4c | 16 | 104 | $0.767 | 9 | 9 | 30 | 143 | $2.44 |
+| n1-highmem-16 us-west2a  | 16 | 104 | $0.809 | 11 | 9 | 30 | 147 | $2.60 |
+| n1-highmem-16 us-west1b | 16 | 104 | $0.674 | 11 | 9 | 30 | 147 | $2.17 |
+| BLAST website (blastn) | - | - | - | - |Searches exceed current restrictions on usage|Searches exceed current restrictions on usage|Searches exceed current restrictions on usage| - |
+
+
+All GCP instances are configured with a 200 GB of persistent standard disk. 
   
+
+*Hourly costs were provided by Google Cloud Platform (May 2019) when VMs were created and are subject to change.
+**Total costs were estimated using the hourly cost and total time to download nt and run Analysis 1, Analysis 2 and Analysis 3. Estimates are used for comparison only, your costs may vary and are your responsibility to monitor and manage.
+   
 Please refer to GCP for more information on [machine types](https://cloud.google.com/compute/docs/machine-types),
 [regions and zones](https://cloud.google.com/compute/docs/regions-zones/) and [compute cost.](https://cloud.google.com/compute/pricing)
 
@@ -585,8 +588,13 @@ docker run --rm \
 ## Stdout and stderr will be in script.out
 ## BLAST output will be in $HOME/results
 ``` 
-Remember to [stop](https://cloud.google.com/compute/docs/instances/stop-start-instance) or [delete](https://cloud.google.com/compute/docs/instances/deleting-instance) the VM to prevent incurring additional cost.  
 
+You have completed the entire tutorial.  At this point, if you do not need the downloaded data for further analysis, please [delete](https://cloud.google.com/compute/docs/instances/deleting-instance) the VM to prevent incurring additional cost.  
+  
+To delete an instance, follow instructions in the section, [Stop the GCP instance.](#stop-the-gcp-instance)
+    
+For additional information, please refer to Google Cloud Platform's documentation on [instance life cycle.](https://cloud.google.com/compute/docs/instances/instance-life-cycle)
+  
 # Additional Resources
 * BLAST:
     * [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279696/)  
@@ -627,7 +635,9 @@ Figure 1. Docker and Cloud Computing Concept. Users can access compute resources
 ## Appendix B. Alternative Ways to Run Docker
   
 As an alternative to what is described above, you can also run BLAST interactively inside a container.   
-  
+
+
+### Run BLAST+ Docker image interactively  
 __When to use__: This is useful for running a few (e.g.: less than 5-10) BLAST searches on small BLAST databases where one expects the search to complete in seconds/minutes.  
   
 ```
@@ -651,6 +661,8 @@ exit
 ```
 
 In addition, you can also run BLAST in [detached mode](https://docs.docker.com/engine/reference/run/#detached--d) by running a container in the background.  
+
+### Run BLAST+ Docker image in detached mode 
 
 __When to use__: This is a more practical approach if one has many (e.g.: 10 or
 more) BLAST searches to run or one expects the search to take a long time to execute. In this case it may be better to start the blast container in detached mode and execute commands on it. 
