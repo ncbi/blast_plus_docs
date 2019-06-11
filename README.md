@@ -192,7 +192,7 @@ You will be asked for billing information, but GCP will not auto-charge you once
 * Enter your country, for example, **United States,** and check the box indicating that you have read and accept the terms of service.
 * Under “Account type,” select “Individual.” (This may be pre-selected in your Google account)
 * Enter your name and address.
-* Under “How you pay", select “Automatic payments.” (This may be pre-selected in your Google account)
+* Under “How you pay," select “Automatic payments.” (This may be pre-selected in your Google account)
 This indicates that you will pay costs after you have used the service, either when you have reached your billing threshold or every 30 days, whichever comes first.  
   
 * Under “Payment method,” select “add a credit or debit card” and enter your credit card information.
