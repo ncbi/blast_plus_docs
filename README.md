@@ -486,7 +486,7 @@ Database: Pre-formatted BLAST nucleotide collection database, version 5 (nt_v5):
 All GCP instances are configured with 200 GB of persistent standard disk. 
   
 
-*Hourly costs were provided by Google Cloud Platform (May 2019) when VMs were created and are subject to change.
+*Hourly costs were provided by Google Cloud Platform (May 2019) when VMs were created and are subject to change.  
 **Total costs were estimated using the hourly cost and total time to download nt and run Analysis 1, Analysis 2, and Analysis 3. Estimates are used for comparison only; your costs may vary and are your responsibility to monitor and manage.
    
 Please refer to GCP for more information on [machine types](https://cloud.google.com/compute/docs/machine-types),
