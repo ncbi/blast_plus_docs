@@ -20,6 +20,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
        * [Step 2. Import sequences and create a BLAST database](#step-2---import-sequences-and-create-a-blast-database)
            * [Show BLAST databases available for download from the Google Cloud bucket](#show-blast-databases-available-for-download-from-the-google-cloud-bucket)
            * [Show BLAST databases available for download from NCBI](#show-blast-databases-available-for-download-from-ncbi)
+           * [Show BLAST databases available for download from AWS](#show-blast-databases-available-for-download-from-aws)
            * [Show available BLAST databases on local host](#show-available-blast-databases-on-local-host)
        * [Step 3. Run BLAST](#step-3-run-blast)
        * [Stop the GCP instance](#stop-the-gcp-instance)
@@ -398,6 +399,11 @@ For a detailed description of `update_blastdb.pl`, please refer to the [document
 *This section is optional.*  
   
 ```docker run --rm ncbi/blast update_blastdb.pl --showall --source ncbi```  
+  
+### Show BLAST databases available for download from AWS  
+*This section is optional.*  
+  
+```docker run --rm ncbi/blast update_blastdb.pl --showall --source aws```  
   
 ### Show available BLAST databases on local host 
 *This section is optional.*   
