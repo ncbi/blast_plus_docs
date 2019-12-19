@@ -1,4 +1,4 @@
-# Official NCBI BLAST+ Docker Image
+# Official NCBI BLAST+ Docker Image Documentation
 
 This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
 
@@ -343,10 +343,9 @@ For example, to use the BLAST+ version 2.7.1 Docker image instead of the latest 
 ### Supported tags
 *This section is optional.*   
   
+* [2.10.0](https://github.com/ncbi/docker/blob/master/blast/2.10.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.9.0](https://github.com/ncbi/docker/blob/master/blast/2.9.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_9_0_April_01)
 * [2.8.1](https://github.com/ncbi/docker/blob/master/blast/2.8.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_8_1_DECEMBER_1_)
-* [2.8.0](https://github.com/ncbi/docker/blob/master/blast/2.8.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_8_0_March_28_)
-* [2.7.1](https://github.com/ncbi/docker/blob/master/blast/2.7.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_7_1_October_2_)
 
 ## Step 2. Import sequences and create a BLAST database
 In this example, we will start by fetching query and database sequences and then create a custom BLAST database.  
