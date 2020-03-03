@@ -101,6 +101,7 @@ docker run --rm ncbi/blast efetch -db protein -format fasta \
     
 ## Step 2. Make BLAST database 
 docker run --rm \
+    --user $(id -u):$(id -g) \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:rw \
     -v $HOME/fasta:/blast/fasta:ro \
     -w /blast/blastdb_custom \
@@ -111,6 +112,7 @@ docker run --rm \
     
 ## Step 3. Run BLAST+ 
 docker run --rm \
+    --user $(id -u):$(id -g) \
     -v $HOME/blastdb:/blast/blastdb:ro \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
     -v $HOME/queries:/blast/queries:ro \
@@ -138,6 +140,7 @@ ls queries/P01349.fsa
 
 ## Download Protein Data Bank Version 5 database (pdb_v5)
 docker run --rm \
+     --user $(id -u):$(id -g) \
      -v $HOME/blastdb:/blast/blastdb:rw \
      -w /blast/blastdb \
      ncbi/blast \
@@ -145,6 +148,7 @@ docker run --rm \
 
 ## Run BLAST+ 
 docker run --rm \
+     --user $(id -u):$(id -g) \
      -v $HOME/blastdb:/blast/blastdb:ro \
      -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
      -v $HOME/queries:/blast/queries:ro \
@@ -265,6 +269,7 @@ Below is a list of `docker run` command line [options](https://docs.docker.com/e
 |`--rm`|Automatically remove the container when it exits|
 |`--volume` , `-v`|Bind mount a volume|
 |`--workdir` , `-w`| Working directory inside the container|
+|`--user $(id -u):$(id -g) `|Set the user and group for files written by the docker image|
 
 ### Docker run command structure
 *This section is optional.*  
@@ -275,6 +280,7 @@ For this tutorial, it would be useful to understand the structure of a Docker co
 docker run --rm ncbi/blast \
 ```
 ```
+    --user $(id -u):$(id -g) \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:rw \
     -v $HOME/fasta:/blast/fasta:ro \
     -w /blast/blastdb_custom \
@@ -287,7 +293,7 @@ docker run --rm ncbi/blast \
   
 The first part of the command `docker run --rm ncbi/blast` is an instruction to run the docker image `ncbi/blast` and remove the container when the run is completed.  
   
-The second part of the command makes the query sequence data accessible in the container. [Docker bind mounts]( https://docs.docker.com/storage/bind-mounts/) uses `-v` to mount the local directories to directories inside the container and provide access permission rw (read and write) or ro (read only). For instance, assuming your subject sequences are stored in the $HOME/fasta directory on the local host, you can use the following parameter to make that directory accessible inside the container in /blast/fasta as a read-only directory `-v $HOME/fasta:/blast/fasta:ro`.  The `-w /blast/blastdb_custom` flag sets the working directory inside the container.
+The second part of the command makes the query sequence data accessible in the container and provides non-root user and group file permissions to files written by the container. [Docker bind mounts]( https://docs.docker.com/storage/bind-mounts/) uses `-v` to mount the local directories to directories inside the container and provide access permission rw (read and write) or ro (read only). For instance, assuming your subject sequences are stored in the $HOME/fasta directory on the local host, you can use the following parameter to make that directory accessible inside the container in /blast/fasta as a read-only directory `-v $HOME/fasta:/blast/fasta:ro`.  The `-w /blast/blastdb_custom` flag sets the working directory inside the container.
   
 The third part of the command is the BLAST+ command. In this case, it is executing makeblastdb to create BLAST database files.  
   
@@ -366,6 +372,7 @@ docker run --rm ncbi/blast efetch -db protein -format fasta \
     
 ## Make BLAST database 
 docker run --rm \
+    --user $(id -u):$(id -g) \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:rw \
     -v $HOME/fasta:/blast/fasta:ro \
     -w /blast/blastdb_custom \
@@ -408,6 +415,7 @@ databases at this location.
 ```
 ## Download Protein Data Bank Version 5 database (pdb_v5)
 docker run --rm \
+     --user $(id -u):$(id -g) \
      -v $HOME/blastdb:/blast/blastdb:rw \
      -w /blast/blastdb \
      ncbi/blast \
@@ -437,6 +445,7 @@ mount provides access to the query sequence(s), and the fourth mount provides a 
   
 ```
 docker run --rm \
+    --user $(id -u):$(id -g) \
     -v $HOME/blastdb:/blast/blastdb:ro \
     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
     -v $HOME/queries:/blast/queries:ro \
@@ -530,6 +539,7 @@ docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp
 ## Download nt_v5 (nucleotide collection version 5) database
 ## This step takes approximately 10 min.  The following command runs in the background.
 docker run --rm \
+  --user $(id -u):$(id -g) \
   -v $HOME/blastdb:/blast/blastdb:rw \
   -w /blast/blastdb \
   ncbi/blast \
@@ -553,6 +563,7 @@ ls -al $HOME/queries
 ## This command will take approximately 9 minutes to complete.
 ## Expected output size: 3.1 GB  
 docker run --rm \
+  --user $(id -u):$(id -g) \
   -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
   -v $HOME/queries:/blast/queries:ro \
   -v $HOME/results:/blast/results:rw \
@@ -564,6 +575,7 @@ docker run --rm \
 ## This command will take approximately 30 minutes to complete.
 ## Expected output size: 10.4 GB  
 docker run --rm \
+  --user $(id -u):$(id -g) \
   -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
   -v $HOME/queries:/blast/queries:ro \
   -v $HOME/results:/blast/results:rw \
@@ -575,6 +587,7 @@ docker run --rm \
 ## This command will take approximately 147 minutes to complete.
 ## Expected output size: 47.8 GB  
 docker run --rm \
+  --user $(id -u):$(id -g) \
   -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
   -v $HOME/queries:/blast/queries:ro \
   -v $HOME/results:/blast/results:rw \
@@ -639,6 +652,7 @@ __When to use__: This is useful for running a few (e.g., fewer than 5-10) BLAST 
   
 ```
 docker run --rm -it \
+    --user $(id -u):$(id -g) \
     -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
     -v $HOME/queries:/blast/queries:ro \
     -v $HOME/results:/blast/results:rw \
@@ -670,6 +684,7 @@ specified when the container is started.
 ```
 # Start a container named 'blast' in detached mode
 docker run --rm -dit --name blast \
+    --user $(id -u):$(id -g) \
     -v $HOME/blastdb:/blast/blastdb:ro -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
     -v $HOME/queries:/blast/queries:ro \
     -v $HOME/results:/blast/results:rw \
