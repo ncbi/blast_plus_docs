@@ -66,7 +66,7 @@ Input data:
 *	Query – 1 sequence, 44 nucleotides, file size 0.2 KB
 *	Databases 
     *	7 sequences, 922 nucleotides, file size 1.7 KB
-    *	PDB protein database (pdb_v5) 0.2945 GB  
+    *	PDB protein database (pdbaa) 0.2831 GB  
     
 First, in a separate browser window or tab, sign in at https://console.cloud.google.com/
 
@@ -136,12 +136,12 @@ You can also query P01349.fsa against the PDB as shown in the following code blo
 ## Confirm query
 ls queries/P01349.fsa
 
-## Download Protein Data Bank Version 5 database (pdb_v5)
+## Download Protein Data Bank amino acid database (pdbaa)
 docker run --rm \
      -v $HOME/blastdb:/blast/blastdb:rw \
      -w /blast/blastdb \
      ncbi/blast \
-     update_blastdb.pl --source gcp pdb_v5
+     update_blastdb.pl --source gcp pdbaa
 
 ## Run BLAST+ 
 docker run --rm \
@@ -150,7 +150,7 @@ docker run --rm \
      -v $HOME/queries:/blast/queries:ro \
      -v $HOME/results:/blast/results:rw \
      ncbi/blast \
-     blastp -query /blast/queries/P01349.fsa -db pdb_v5
+     blastp -query /blast/queries/P01349.fsa -db pdbaa
 
 ## Output on screen
 ## Scroll up to see the entire output
@@ -406,12 +406,12 @@ The command below mounts the `$HOME/blastdb` path on the local machine as
 databases at this location.  
   
 ```
-## Download Protein Data Bank Version 5 database (pdb_v5)
+## Download Protein Data Bank amino acid database (pdbaa)
 docker run --rm \
      -v $HOME/blastdb:/blast/blastdb:rw \
      -w /blast/blastdb \
      ncbi/blast \
-     update_blastdb.pl --source gcp pdb_v5
+     update_blastdb.pl --source gcp pdbaa
 
 ## Display database(s) in $HOME/blastdb
 docker run --rm \
@@ -420,7 +420,7 @@ docker run --rm \
     blastdbcmd -list /blast/blastdb -remove_redundant_dbs
 ```
   
-You should see an output `/blast/blastdb/pdb_v5 Protein`.  
+You should see an output `/blast/blastdb/pdbaa Protein`.  
   
 ```
 ## For the custom BLAST database used in this example -
