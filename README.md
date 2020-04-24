@@ -406,12 +406,12 @@ The command below mounts the `$HOME/blastdb` path on the local machine as
 databases at this location.  
   
 ```
-## Download Protein Data Bank Version 5 database (pdb_v5)
+## Download Protein Data Bank amino acid database (pdbaa)
 docker run --rm \
      -v $HOME/blastdb:/blast/blastdb:rw \
      -w /blast/blastdb \
      ncbi/blast \
-     update_blastdb.pl --source gcp pdb_v5
+     update_blastdb.pl --source gcp pdbaa
 
 ## Display database(s) in $HOME/blastdb
 docker run --rm \
@@ -420,7 +420,7 @@ docker run --rm \
     blastdbcmd -list /blast/blastdb -remove_redundant_dbs
 ```
   
-You should see an output `/blast/blastdb/pdb_v5 Protein`.  
+You should see an output `/blast/blastdb/pdbaa Protein`.  
   
 ```
 ## For the custom BLAST database used in this example -
