@@ -460,7 +460,7 @@ To test scalability, we will use inputs of different sizes to estimate the amoun
 Input files: 28 samples (multi-FASTA files) containing de novo aligned contigs from the publication.  
 (Instructions to [download]((https://figshare.com/s/729b346eda670e9daba4)) and create the input files are described in the [code block](#commands-to-run) below.)    
   
-Database: Pre-formatted BLAST nucleotide collection database, version 5 (nt_v5): 68.7217 GB  
+Database: Pre-formatted BLAST nucleotide collection database, version 5 (nt): 68.7217 GB  (from May 2019)
   
 |       | Input file name | File content | File size | Number of sequences | Number of nucleotides | Expected output size |
 | :---: | :---: | :---: | :---: | :---: | :---: | :---: |
@@ -527,18 +527,18 @@ cp query* $HOME/queries/.
 ## Step 2. Display BLAST databases on the GCP
 docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp
 
-## Download nt_v5 (nucleotide collection version 5) database
+## Download nt (nucleotide collection version 5) database
 ## This step takes approximately 10 min.  The following command runs in the background.
 docker run --rm \
   -v $HOME/blastdb:/blast/blastdb:rw \
   -w /blast/blastdb \
   ncbi/blast \
-  update_blastdb.pl --source gcp nt_v5 &
+  update_blastdb.pl --source gcp nt &
 
 ## At this point, confirm query/database have been properly provisioned before proceeding
 
 ## Check the size of the directory containing the BLAST database
-## nt_v5 should be around 68 GB
+## nt should be around 68 GB    (this was in May 2019)
 du -sk $HOME/blastdb
 
 ## Check for queries, there should be three files - query.fa, query1.fa and query5.fa
@@ -557,7 +557,7 @@ docker run --rm \
   -v $HOME/queries:/blast/queries:ro \
   -v $HOME/results:/blast/results:rw \
   ncbi/blast \
-  blastn -query /blast/queries/query1.fa -db nt_v5 -num_threads 16 \
+  blastn -query /blast/queries/query1.fa -db nt -num_threads 16 \
   -out /blast/results/blastn.query1.denovo16s.out
 
 ## Run BLAST using query5.fa (Samples 1-5) 
@@ -568,7 +568,7 @@ docker run --rm \
   -v $HOME/queries:/blast/queries:ro \
   -v $HOME/results:/blast/results:rw \
   ncbi/blast \
-  blastn -query /blast/queries/query5.fa -db nt_v5 -num_threads 16 \
+  blastn -query /blast/queries/query5.fa -db nt -num_threads 16 \
   -out /blast/results/blastn.query5.denovo16s.out
 
 ## Run BLAST using query.fa (All 28 samples) 
@@ -579,7 +579,7 @@ docker run --rm \
   -v $HOME/queries:/blast/queries:ro \
   -v $HOME/results:/blast/results:rw \
   ncbi/blast \
-  blastn -query /blast/queries/query.fa -db nt_v5 -num_threads 16 \
+  blastn -query /blast/queries/query.fa -db nt -num_threads 16 \
   -out /blast/results/blastn.query.denovo16s.out
 
 ## Stdout and stderr will be in script.out
