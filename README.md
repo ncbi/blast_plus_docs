@@ -738,7 +738,7 @@ The detailed instructions for connecting to a Linux VM can be found [here](https
 
 Specify **ec2-user** as the username, instead of root in your ssh command line or when prompted to login, specify **ec2-user** as the username.
 
-<img src="./images/aws_blast_plus_ssh_connected.jpg" alt="aws-ssh-connected" width="90%" height="90%" />
+<img src="./images/aws_blast_plus_ssh_connected.JPG" alt="aws-ssh-connected" width="90%" height="90%" />
 
 ### Step 2. Retrieve sequences
 ```
