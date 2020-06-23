@@ -37,7 +37,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
        * [Appendix C. Transfer files to/from a GCP VM](#appendix-c-transfer-files-tofrom-a-gcp-vm)
 
 # What Is NCBI BLAST?
-<img src="./images/nih_nlm_ncbi_logo.png" alt="ncbi-logo" align="right" width="25%" height="25%" />
+<img src="./images/nih_nlm_ncbi_logo.png" alt="ncbi-logo" align="right" width="45%" height="45%" />
 The National Center for Biotechnology Information (NCBI) Basic Local Alignment Search Tool [(BLAST)]( https://blast.ncbi.nlm.nih.gov) finds regions of local similarity between sequences. The program compares nucleotide or protein sequences to sequence databases and calculates the statistical significance of matches. BLAST can be used to infer functional and evolutionary relationships between sequences as well as help identify members of gene families.
 
 
