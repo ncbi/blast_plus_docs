@@ -734,7 +734,7 @@ There are several ways to establish an SSH connection. From the EC2 Instance lis
 
 The detailed instructions for connecting to a Linux VM can be found [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html?icmpid=docs_ec2_console).
 
-<img src="./images/aws_blast_plus_ssh_connect_t2_large.jpg" alt="aws-ssh-connect-t2-large" width="90%" height="90%" />
+<img src="./images/aws_blast_plus_ssh_connect_t2_large.JPG" alt="aws-ssh-connect-t2-large" width="90%" height="90%" />
 
 Specify **ec2-user** as the username, instead of root in your ssh command line or when prompted to login, specify **ec2-user** as the username.
 
