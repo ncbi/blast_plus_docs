@@ -37,14 +37,6 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
        * [Appendix C. Transfer files to/from a GCP VM](#appendix-c-transfer-files-tofrom-a-gcp-vm)
 
 # What Is NCBI BLAST?
-
-<img align="right" width="150" height="200" src="https://www.nlm.nih.gov/about/logos_nlm_photos/large-White_ncbi_logo_200h.png" alt="ncbi logo">  
-
-
-The National Center for Biotechnology Information (NCBI) Basic Local Alignment Search Tool [(BLAST)]( https://blast.ncbi.nlm.nih.gov) finds regions of local similarity between sequences. The program compares nucleotide or protein sequences to sequence databases and calculates the statistical significance of matches. BLAST can be used to infer functional and evolutionary relationships between sequences as well as help identify members of gene families.
-
-Introduced in 2009, BLAST+ is an improved version of BLAST command line applications.  For a full description of the features and capabilities of BLAST+, please refer to the [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279690/).
-
 # What Is Cloud Computing?
 Cloud computing offers potential cost savings by using on-demand, scalable, and elastic computational resources. While a detailed description of various cloud technologies and benefits is out of the scope for this repository, the following sections contain information needed to get started running the BLAST+ Docker image on the Google Cloud Platform [(GCP)]( https://cloud.google.com/).  
 
