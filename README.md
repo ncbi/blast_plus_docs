@@ -637,7 +637,7 @@ The detailed instructions for connecting to a Linux VM can be found [here](https
 
 Specify **ec2-user** as the username, instead of root in your ssh command line or when prompted to login, specify **ec2-user** as the username.
 
-<img src="./images/aws_blast_plus_ssh_connected.jpg" alt="aws-ssh-connected" width="90%" height="90%" />
+<img src="./images/aws_blast_plus_ssh_connected.JPG" alt="aws-ssh-connected" width="90%" height="90%" />
 
 ### Step 3: Import sequences and create a BLAST database
 In this example, we will start by fetching query and database sequences and then create a custom BLAST database.
