@@ -27,6 +27,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [Background](#background)
            * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
            * [Commands to run](#commands-to-run)
+   * [Amazon Cloud Platform Setup](#google-cloud-platform-setup)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
@@ -54,7 +55,7 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
   
 # Section 1 - Getting Started Using the BLAST+ Docker Image with a Small Example
    
-This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
+This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the Amazon section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
 More detailed descriptions of analysis steps, alternative commands, and more advanced topics are covered in the later sections of this documentation.  
   
 Requirements:  A Google account
