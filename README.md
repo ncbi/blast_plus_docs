@@ -595,6 +595,202 @@ For additional information, please refer to Google Cloud Platform's documentatio
   
 # Amazon Cloud Platform Setup
 
+## Table of Contents
+
+* [Amazon Web Services Setup](#amazon-web-services-setup)
+* [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
+* [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
+* [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
+* [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
+* [Appendix](#appendix)
+  * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
+
+## Amazon Web Services Setup
+To run these examples you'll need an Amazon Web Services ([AWS](https://aws.amazon.com)) account. If you don't have one already, you can create an account that provides the ability to explore and try out AWS services free of charge up to specified limits for each service. To get started visit the [Free Tier site](https://aws.amazon.com/free), this will require a valid credit card however it will not be charged if you compute within the Free Tier. When choosing a Free Tier product, be sure it's in the Product Category **Compute**. 
+
+## Requirements
+* An AWS account
+* An EC2 VM running Linux, on an instance type of t2.micro
+* An SSH client, such as the native *Terminal* application on OS X or on Windows 8 or greater with the CMD prompt or Putty on Windows
+
+## Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine
+
+### Step 1: Create an EC2 Virtual Machine (VM)
+These instructions create an EC2 VM based on an Amazon Machine Image (AMI) that includes Docker and its dependencies.
+
+1. Log into the [AWS console](https://console.aws.amazon.com) and select the **EC2** service.
+2. Start the instance creation process by selecting **Launch Instance** (a virtual machine)
+3. In **Step 1: Choose an Amazon Machine Image (AMI)** select the **AWS Marketplace** tab
+4. In the search box enter the value *ECS-Optimized Amazon Linux AMI*
+5. Select one of the **Free tier eligible** AMIs; **Amazon ECS-Optimized Amazon Linux AMI**; select **Continue**
+6. In **Step 2: Choose an Instance Type** choose the **t2.micro** Type; select **Next: Review and Launch**
+7. Select **Launch**
+8. To allow SSH connection to this VM you'll need a **key pair**. When prompted, select an existing, or create a new, key pair. Be sure to record the location (directory) in which you place the associated **.pem** file, then select **Launch Instances**.
+9. Select **View Instances**
+
+### Step 2: Establish an SSH session with the EC2 VM
+With the VM created, you access it from your local computer using SSH. Your key pair / .pem file serves as your credential.
+
+There are several ways to establish an SSH connection. From the EC2 Instance list in the AWS Console, select **Connect**, then follow the instructions for the Connection Method **A standalone SSH client**.
+
+The detailed instructions for connecting to a Linux VM can be found [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html?icmpid=docs_ec2_console).
+
+<img src="./images/aws_blast_plus_ssh_connect_t2_micro.jpg" alt="aws-ssh-connect-t2-micro" width="90%" height="90%" />
+
+Specify **ec2-user** as the username, instead of root in your ssh command line or when prompted to login, specify **ec2-user** as the username.
+
+<img src="./images/aws_blast_plus_ssh_connected.jpg" alt="aws-ssh-connected" width="90%" height="90%" />
+
+### Step 3: Import sequences and create a BLAST database
+In this example, we will start by fetching query and database sequences and then create a custom BLAST database.
+
+```
+## Retrieve sequences
+## Create directories for analysis
+cd $HOME; sudo mkdir bin blastdb queries fasta results blastdb_custom; sudo chown ec2-user:ec2-user *
+
+## Retrieve query sequence
+docker run --rm ncbi/blast efetch -db protein -format fasta \
+    -id P01349 > queries/P01349.fsa
+
+## Retrieve database sequences
+docker run --rm ncbi/blast efetch -db protein -format fasta \
+    -id Q90523,P80049,P83981,P83982,P83983,P83977,P83984,P83985,P27950 \
+    > fasta/nurse-shark-proteins.fsa
+
+## Make BLAST database 
+docker run --rm \
+    -v $HOME/blastdb_custom:/blast/blastdb_custom:rw \
+    -v $HOME/fasta:/blast/fasta:ro \
+    -w /blast/blastdb_custom \
+    ncbi/blast \
+    makeblastdb -in /blast/fasta/nurse-shark-proteins.fsa -dbtype prot \
+    -parse_seqids -out nurse-shark-proteins -title "Nurse shark proteins" \
+    -taxid 7801 -blastdb_version 5
+```
+To verify the newly created BLAST database above, you can run the following command to display the accessions, sequence length, and common name of the sequences in the database.
+```
+## Verify BLAST DB
+docker run --rm \
+    -v $HOME/blastdb:/blast/blastdb:ro \
+    -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+    ncbi/blast \
+    blastdbcmd -entry all -db nurse-shark-proteins -outfmt "%a %l %T"
+```
+### Step 4: Run BLAST
+When running BLAST in a Docker container, note the mounts (```-v``` option) specified to the ```docker run```	 command to make the input and outputs accessible. In the examples below, the first two mounts provide access to the BLAST databases, the third mount provides access to the query sequence(s), and the fourth mount provides a directory to save the results. (Note the ```:ro``` and ```:rw``` options, which mount the directories as read-only and read-write respectively.)
+```
+## Run BLAST+ 
+docker run --rm \
+    -v $HOME/blastdb:/blast/blastdb:ro \
+    -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+    -v $HOME/queries:/blast/queries:ro \
+    -v $HOME/results:/blast/results:rw \
+    ncbi/blast \
+    blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins \
+	-out /blast/results/blastp.out
+```
+At this point, you should see the output file ```$HOME/results/blastp.out```. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96. To view the content of this output file, use the command ```more $HOME/results/blastp.out```.
+
+### Step 5: *Optional -* Show BLAST databases available for download from the NCBI AWS bucket
+```
+docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source aws
+```
+The expected output is a list of BLAST DBs, including their name, description, size, and last updated date.
+
+For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)
+
+### Step 6: *Optional -* Show BLAST databases available for download from NCBI
+```
+docker run --rm ncbi/blast update_blastdb.pl --showall --source ncbi
+```
+The expected output is a list of the names of BLAST DBs.
+
+### Step 7: Stop the EC2 VM
+Remember to [stop](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html) or [terminate](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) the VM to prevent incurring additional cost. You can do this from the EC2 Instance list in the AWS Console as shown below.
+
+<img src="./images/aws_blast_plus_instance_stop_or_terminate.jpg" alt="aws-instance-stop-or-terminate" width="90%" height="90%" />
+
+## Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB
+This example requires a multi-core host. As such, EC2 compute charges will be realized by executing this example. The current rate for the Instance Type used - t2.large - is $0.093/hr.
+
+### Step 1: Create an EC2 Virtual Machine (VM)
+These instructions create an EC2 VM based on an Amazon Machine Image (AMI) that includes Docker and its dependencies.
+
+1. Log into the [AWS console](https://console.aws.amazon.com) and select the **EC2** service.
+2. Start the instance creation process by selecting **Launch Instance** (a virtual machine)
+3. In **Step 1: Choose an Amazon Machine Image (AMI)** select the **AWS Marketplace** tab
+4. In the search box enter the value *ECS-Optimized Amazon Linux AMI*
+5. Select one of the **Free tier eligible** AMIs; **Amazon ECS-Optimized Amazon Linux AMI**; select **Continue**
+6. In **Step 2: Choose an Instance Type** choose the **t2.large** Type; select **Next: Review and Launch**
+7. Select **Launch**
+8. To allow SSH connection to this VM you'll need a **key pair**. When prompted, select an existing, or create a new, key pair. Be sure to record the location (directory) in which you place the associated **.pem** file, then select **Launch Instances**. You can use the same key pair as used in Example 1.
+9. Select **View Instances**
+
+### Step 2: Establish an SSH session with the EC2 VM
+With the VM created, you access it from your local computer using SSH. Your key pair / .pem file serves as your credential.
+
+There are several ways to establish an SSH connection. From the EC2 Instance list in the AWS Console, select **Connect**, then follow the instructions for the Connection Method **A standalone SSH client**.
+
+The detailed instructions for connecting to a Linux VM can be found [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html?icmpid=docs_ec2_console).
+
+<img src="./images/aws_blast_plus_ssh_connect_t2_large.jpg" alt="aws-ssh-connect-t2-large" width="90%" height="90%" />
+
+Specify **ec2-user** as the username, instead of root in your ssh command line or when prompted to login, specify **ec2-user** as the username.
+
+<img src="./images/aws_blast_plus_ssh_connected.jpg" alt="aws-ssh-connected" width="90%" height="90%" />
+
+### Step 2. Retrieve sequences
+```
+## Create directories for analysis
+cd $HOME; sudo mkdir bin blastdb queries fasta results blastdb_custom; sudo chown ec2-user:ec2-user *
+
+## Retrieve query sequence
+docker run --rm ncbi/blast efetch -db protein -format fasta \
+    -id P01349 > queries/P01349.fsa
+```
+
+### Step 3: Download Protein Data Bank Amino Acid Database (pdbaa)
+The command below mounts (using the ```-v``` option) the `$HOME/blastdb` path on the local machine as `/blast/blastdb` on the container, and `blastdbcmd` shows the available BLAST databases at this location.  
+  
+```
+## Download Protein Data Bank amino acid database (pdbaa)
+docker run --rm \
+     -v $HOME/blastdb:/blast/blastdb:rw \
+     -w /blast/blastdb \
+     ncbi/blast \
+     update_blastdb.pl --source aws pdbaa
+
+## Display database(s) in $HOME/blastdb
+docker run --rm \
+    -v $HOME/blastdb:/blast/blastdb:ro \
+    ncbi/blast \
+    blastdbcmd -list /blast/blastdb -remove_redundant_dbs
+```
+  
+You should see an output `/blast/blastdb/pdbaa Protein`.  
+
+### Step 4: Run BLAST+
+``` 
+## Run BLAST+ 
+docker run --rm \
+     -v $HOME/blastdb:/blast/blastdb:ro \
+     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+     -v $HOME/queries:/blast/queries:ro \
+     -v $HOME/results:/blast/results:rw \
+     ncbi/blast \
+     blastp -query /blast/queries/P01349.fsa -db pdbaa \
+	 -out /blast/results/blastp_pdbaa.out
+```
+At this point, you should see the output file ```$HOME/results/blastp_pdbaa.out```. To view the content of this output file, use the command ```more $HOME/results/blastp_pdbaa.out```.
+ 
+## Appendix
+
+### Appendix A: Transfer Files to/from an AWS VM
+One way to transfer files between your local computer and a Linux instance is to use the secure copy protocol (SCP).
+
+The secion *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
+
 # Additional Resources
 * BLAST:
     * [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279696/)  
