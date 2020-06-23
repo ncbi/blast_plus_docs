@@ -709,7 +709,7 @@ The expected output is a list of the names of BLAST DBs.
 ### Step 7: Stop the EC2 VM
 Remember to [stop](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html) or [terminate](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) the VM to prevent incurring additional cost. You can do this from the EC2 Instance list in the AWS Console as shown below.
 
-<img src="./images/aws_blast_plus_instance_stop_or_terminate.jpg" alt="aws-instance-stop-or-terminate" width="90%" height="90%" />
+<img src="./images/aws_blast_plus_instance_stop_or_terminate.JPG" alt="aws-instance-stop-or-terminate" width="90%" height="90%" />
 
 ## Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB
 This example requires a multi-core host. As such, EC2 compute charges will be realized by executing this example. The current rate for the Instance Type used - t2.large - is $0.093/hr.
