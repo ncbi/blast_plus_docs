@@ -27,7 +27,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [Background](#background)
            * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
            * [Commands to run](#commands-to-run)
-   * [Amazon Cloud Platform Setup](#google-cloud-platform-setup)
+   * [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
