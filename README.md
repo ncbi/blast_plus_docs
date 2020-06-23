@@ -593,6 +593,8 @@ To delete an instance, follow instructions in the section [Stop the GCP instance
     
 For additional information, please refer to Google Cloud Platform's documentation on [instance life cycle.](https://cloud.google.com/compute/docs/instances/instance-life-cycle)
   
+# Amazon Cloud Platform Setup
+
 # Additional Resources
 * BLAST:
     * [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279696/)  
