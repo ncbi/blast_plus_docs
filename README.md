@@ -328,20 +328,21 @@ The following command displays the latest BLAST version.
 Appending a tag to the image name (`ncbi/blast`) allows you to use a
 different version of BLAST+ (see “Supported Tags and Respective Release Notes” section for supported versions).  
 
-Different versions of BLAST+ exist in different Docker images. The following command will initiate download of the BLAST+ version 2.7.1 Docker image. 
+Different versions of BLAST+ exist in different Docker images. The following command will initiate download of the BLAST+ version 2.9.0 Docker image. 
 ```
-docker run --rm ncbi/blast:2.7.1 blastn -version
+docker run --rm ncbi/blast:2.9.0 blastn -version
 ## Display a list of images
 docker images
 ```
 
-For example, to use the BLAST+ version 2.7.1 Docker image instead of the latest version, replace the first part of the command
+For example, to use the BLAST+ version 2.9.0 Docker image instead of the latest version, replace the first part of the command
 
-```docker run --rm ncbi/blast``` with ```docker run --rm ncbi/blast:2.7.1 ```
+```docker run --rm ncbi/blast``` with ```docker run --rm ncbi/blast:2.9.0 ```
 
 ### Supported tags
 *This section is optional.*   
   
+* [2.10.1](https://github.com/ncbi/docker/blob/master/blast/2.10.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.10.0](https://github.com/ncbi/docker/blob/master/blast/2.10.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.9.0](https://github.com/ncbi/docker/blob/master/blast/2.9.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_9_0_April_01)
 * [2.8.1](https://github.com/ncbi/docker/blob/master/blast/2.8.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_8_1_DECEMBER_1_)
