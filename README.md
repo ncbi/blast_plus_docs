@@ -9,24 +9,25 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
    * [What Is Docker?](#what-is-docker)
    * [Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example](#section-1---getting-started-using-the-blast-docker-image-with-a-small-example)     
    * [Google Cloud Platform Setup](#google-cloud-platform-setup)  
-   * [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image)
-       * [Step 1. Install Docker](#step-1-install-docker)
-           * [Docker `run` command options](#docker-run-command-options)
-           * [Docker `run` command structure](#docker-run-command-structure)
-           * [Useful Docker commands](#useful-docker-commands)
-           * [Using BLAST+ with Docker](#using-blast-with-docker)
-           * [Versions of BLAST+ Docker image](#versions-of-blast-docker-image)
-           * [Supported tags](#supported-tags)
-       * [Step 2. Import sequences and create a BLAST database](#step-2---import-sequences-and-create-a-blast-database)
-           * [Show BLAST databases available for download from the Google Cloud bucket](#show-blast-databases-available-for-download-from-the-google-cloud-bucket)
-           * [Show BLAST databases available for download from NCBI](#show-blast-databases-available-for-download-from-ncbi)
-           * [Show available BLAST databases on local host](#show-available-blast-databases-on-local-host)
-       * [Step 3. Run BLAST](#step-3-run-blast)
-       * [Stop the GCP instance](#stop-the-gcp-instance)
-   * [Section 3 - Using the BLAST+ Docker Image at Production Scale](#section-3---using-the-blast-docker-image-at-production-scale)
-       * [Background](#background)
-       * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
-       * [Commands to run](#commands-to-run)
+       * [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image)
+           * [Step 1. Install Docker](#step-1-install-docker)
+               * [Docker `run` command options](#docker-run-command-options)
+               * [Docker `run` command structure](#docker-run-command-structure)
+               * [Useful Docker commands](#useful-docker-commands)
+               * [Using BLAST+ with Docker](#using-blast-with-docker)
+               * [Versions of BLAST+ Docker image](#versions-of-blast-docker-image)
+               * [Supported tags](#supported-tags)
+           * [Step 2. Import sequences and create a BLAST database](#step-2---import-sequences-and-create-a-blast-database)
+               * [Show BLAST databases available for download from the Google Cloud bucket](#show-blast-databases-available-for-download-from-the-google-cloud-bucket)
+               * [Show BLAST databases available for download from NCBI](#show-blast-databases-available-for-download-from-ncbi)
+               * [Show available BLAST databases on local host](#show-available-blast-databases-on-local-host)
+           * [Step 3. Run BLAST](#step-3-run-blast)
+           * [Stop the GCP instance](#stop-the-gcp-instance)
+       * [Section 3 - Using the BLAST+ Docker Image at Production Scale](#section-3---using-the-blast-docker-image-at-production-scale)
+           * [Background](#background)
+           * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
+           * [Commands to run](#commands-to-run)
+   * [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
@@ -36,11 +37,9 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
        * [Appendix C. Transfer files to/from a GCP VM](#appendix-c-transfer-files-tofrom-a-gcp-vm)
 
 # What Is NCBI BLAST?
+<img src="./images/nih_nlm_ncbi_logo.png" alt="ncbi-logo" width="25%" height="25%" />
 
-<img align="right" width="150" height="200" src="https://www.nlm.nih.gov/about/logos_nlm_photos/large-White_ncbi_logo_200h.png" alt="ncbi logo">  
-
-
-The National Center for Biotechnology Information (NCBI) Basic Local Alignment Search Tool [(BLAST)]( https://blast.ncbi.nlm.nih.gov) finds regions of local similarity between sequences. The program compares nucleotide or protein sequences to sequence databases and calculates the statistical significance of matches. BLAST can be used to infer functional and evolutionary relationships between sequences as well as help identify members of gene families.
+The National Center for Biotechnology Information (NCBI) Basic Local Alignment Search Tool[(BLAST)]( https://blast.ncbi.nlm.nih.gov) finds regions of local similarity between sequences. The program compares nucleotide or protein sequences to sequence databases and calculates the statistical significance of matches. BLAST can be used to infer functional and evolutionary relationships between sequences as well as help identify members of gene families.
 
 Introduced in 2009, BLAST+ is an improved version of BLAST command line applications.  For a full description of the features and capabilities of BLAST+, please refer to the [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279690/).
 
@@ -54,7 +53,7 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
   
 # Section 1 - Getting Started Using the BLAST+ Docker Image with a Small Example
    
-This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
+This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup) section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
 More detailed descriptions of analysis steps, alternative commands, and more advanced topics are covered in the later sections of this documentation.  
   
 Requirements:  A Google account
@@ -329,20 +328,21 @@ The following command displays the latest BLAST version.
 Appending a tag to the image name (`ncbi/blast`) allows you to use a
 different version of BLAST+ (see “Supported Tags and Respective Release Notes” section for supported versions).  
 
-Different versions of BLAST+ exist in different Docker images. The following command will initiate download of the BLAST+ version 2.7.1 Docker image. 
+Different versions of BLAST+ exist in different Docker images. The following command will initiate download of the BLAST+ version 2.9.0 Docker image. 
 ```
-docker run --rm ncbi/blast:2.7.1 blastn -version
+docker run --rm ncbi/blast:2.9.0 blastn -version
 ## Display a list of images
 docker images
 ```
 
-For example, to use the BLAST+ version 2.7.1 Docker image instead of the latest version, replace the first part of the command
+For example, to use the BLAST+ version 2.9.0 Docker image instead of the latest version, replace the first part of the command
 
-```docker run --rm ncbi/blast``` with ```docker run --rm ncbi/blast:2.7.1 ```
+```docker run --rm ncbi/blast``` with ```docker run --rm ncbi/blast:2.9.0 ```
 
 ### Supported tags
 *This section is optional.*   
   
+* [2.10.1](https://github.com/ncbi/docker/blob/master/blast/2.10.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.10.0](https://github.com/ncbi/docker/blob/master/blast/2.10.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.9.0](https://github.com/ncbi/docker/blob/master/blast/2.9.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_9_0_April_01)
 * [2.8.1](https://github.com/ncbi/docker/blob/master/blast/2.8.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_8_1_DECEMBER_1_)
@@ -391,7 +391,7 @@ As an alternative, you can also download preformatted BLAST databases from NCBI 
   
 ```docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp```
 
-For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)
+For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)  By default `update_blastdb.pl` will download from the cloud provided you are connected to, or from NCBI if you are not using a supported cloud provider.
   
 ### Show BLAST databases available for download from NCBI  
 *This section is optional.*  
@@ -411,7 +411,7 @@ docker run --rm \
      -v $HOME/blastdb:/blast/blastdb:rw \
      -w /blast/blastdb \
      ncbi/blast \
-     update_blastdb.pl --source gcp pdbaa
+     update_blastdb.pl pdbaa
 
 ## Display database(s) in $HOME/blastdb
 docker run --rm \
@@ -592,6 +592,211 @@ To delete an instance, follow instructions in the section [Stop the GCP instance
     
 For additional information, please refer to Google Cloud Platform's documentation on [instance life cycle.](https://cloud.google.com/compute/docs/instances/instance-life-cycle)
   
+# Amazon Cloud Platform Setup
+
+## Table of Contents
+
+* [Amazon Web Services Setup](#amazon-web-services-setup)
+* [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
+* [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
+* [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
+* [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
+* [Appendix](#appendix)
+  * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
+
+## Amazon Web Services Setup
+To run these examples you'll need an Amazon Web Services ([AWS](https://aws.amazon.com)) account. If you don't have one already, you can create an account that provides the ability to explore and try out AWS services free of charge up to specified limits for each service. To get started visit the [Free Tier site](https://aws.amazon.com/free), this will require a valid credit card however it will not be charged if you compute within the Free Tier. When choosing a Free Tier product, be sure it's in the Product Category **Compute**. 
+
+## Requirements
+* An AWS account
+* An EC2 VM running Linux, on an instance type of t2.micro
+* An SSH client, such as the native *Terminal* application on OS X or on Windows 8 or greater with the CMD prompt or Putty on Windows
+
+## Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine
+
+### Step 1: Create an EC2 Virtual Machine (VM)
+These instructions create an EC2 VM based on an Amazon Machine Image (AMI) that includes Docker and its dependencies.
+
+1. Log into the [AWS console](https://console.aws.amazon.com) and select the **EC2** service.
+2. Start the instance creation process by selecting **Launch Instance** (a virtual machine)
+3. In **Step 1: Choose an Amazon Machine Image (AMI)** select the **AWS Marketplace** tab
+4. In the search box enter the value *ECS-Optimized Amazon Linux AMI*
+5. Select one of the **Free tier eligible** AMIs; **Amazon ECS-Optimized Amazon Linux AMI**; select **Continue**
+6. In **Step 2: Choose an Instance Type** choose the **t2.micro** Type; select **Next: Review and Launch**
+7. Select **Launch**
+8. To allow SSH connection to this VM you'll need a **key pair**. When prompted, select an existing, or create a new, key pair. Be sure to record the location (directory) in which you place the associated **.pem** file, then select **Launch Instances**.
+9. Select **View Instances**
+
+### Step 2: Establish an SSH session with the EC2 VM
+With the VM created, you access it from your local computer using SSH. Your key pair / .pem file serves as your credential.
+
+There are several ways to establish an SSH connection. From the EC2 Instance list in the AWS Console, select **Connect**, then follow the instructions for the Connection Method **A standalone SSH client**.
+
+The detailed instructions for connecting to a Linux VM can be found [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html?icmpid=docs_ec2_console).
+
+<img src="./images/aws_blast_plus_ssh_connect_t2_micro.jpg" alt="aws-ssh-connect-t2-micro" width="90%" height="90%" />
+
+Specify **ec2-user** as the username, instead of root in your ssh command line or when prompted to login, specify **ec2-user** as the username.
+
+<img src="./images/aws_blast_plus_ssh_connected.JPG" alt="aws-ssh-connected" width="90%" height="90%" />
+
+### Step 3: Import sequences and create a BLAST database
+In this example, we will start by fetching query and database sequences and then create a custom BLAST database.
+
+```
+## Retrieve sequences
+## Create directories for analysis
+cd $HOME; sudo mkdir bin blastdb queries fasta results blastdb_custom; sudo chown ec2-user:ec2-user *
+
+## Retrieve query sequence
+docker run --rm ncbi/blast efetch -db protein -format fasta \
+    -id P01349 > queries/P01349.fsa
+
+## Retrieve database sequences
+docker run --rm ncbi/blast efetch -db protein -format fasta \
+    -id Q90523,P80049,P83981,P83982,P83983,P83977,P83984,P83985,P27950 \
+    > fasta/nurse-shark-proteins.fsa
+
+## Make BLAST database 
+docker run --rm \
+    -v $HOME/blastdb_custom:/blast/blastdb_custom:rw \
+    -v $HOME/fasta:/blast/fasta:ro \
+    -w /blast/blastdb_custom \
+    ncbi/blast \
+    makeblastdb -in /blast/fasta/nurse-shark-proteins.fsa -dbtype prot \
+    -parse_seqids -out nurse-shark-proteins -title "Nurse shark proteins" \
+    -taxid 7801 -blastdb_version 5
+```
+To verify the newly created BLAST database above, you can run the following command to display the accessions, sequence length, and common name of the sequences in the database.
+```
+## Verify BLAST DB
+docker run --rm \
+    -v $HOME/blastdb:/blast/blastdb:ro \
+    -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+    ncbi/blast \
+    blastdbcmd -entry all -db nurse-shark-proteins -outfmt "%a %l %T"
+```
+### Step 4: Run BLAST
+When running BLAST in a Docker container, note the mounts (```-v``` option) specified to the ```docker run```	 command to make the input and outputs accessible. In the examples below, the first two mounts provide access to the BLAST databases, the third mount provides access to the query sequence(s), and the fourth mount provides a directory to save the results. (Note the ```:ro``` and ```:rw``` options, which mount the directories as read-only and read-write respectively.)
+```
+## Run BLAST+ 
+docker run --rm \
+    -v $HOME/blastdb:/blast/blastdb:ro \
+    -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+    -v $HOME/queries:/blast/queries:ro \
+    -v $HOME/results:/blast/results:rw \
+    ncbi/blast \
+    blastp -query /blast/queries/P01349.fsa -db nurse-shark-proteins \
+	-out /blast/results/blastp.out
+```
+At this point, you should see the output file ```$HOME/results/blastp.out```. With your query, BLAST identified the protein sequence P80049.1 as a match with a score of 14.2 and an E-value of 0.96. To view the content of this output file, use the command ```more $HOME/results/blastp.out```.
+
+### Step 5: *Optional -* Show BLAST databases available for download from the NCBI AWS bucket
+```
+docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source aws
+```
+The expected output is a list of BLAST DBs, including their name, description, size, and last updated date.
+
+For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)  By default `update_blastdb.pl` will download from the cloud provided you are connected to, or from NCBI if you are not using a supported cloud provider.
+
+### Step 6: *Optional -* Show BLAST databases available for download from NCBI
+```
+docker run --rm ncbi/blast update_blastdb.pl --showall --source ncbi
+```
+The expected output is a list of the names of BLAST DBs.
+
+### Step 7: Stop the EC2 VM
+Remember to [stop](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/Stop_Start.html) or [terminate](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/terminating-instances.html) the VM to prevent incurring additional cost. You can do this from the EC2 Instance list in the AWS Console as shown below.
+
+<img src="./images/aws_blast_plus_instance_stop_or_terminate.JPG" alt="aws-instance-stop-or-terminate" width="90%" height="90%" />
+
+## Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB
+This example requires a multi-core host. As such, EC2 compute charges will be realized by executing this example. The current rate for the Instance Type used - t2.large - is $0.093/hr.
+
+### Step 1: Create an EC2 Virtual Machine (VM)
+These instructions create an EC2 VM based on an Amazon Machine Image (AMI) that includes Docker and its dependencies.
+
+1. Log into the [AWS console](https://console.aws.amazon.com) and select the **EC2** service.
+2. Start the instance creation process by selecting **Launch Instance** (a virtual machine)
+3. In **Step 1: Choose an Amazon Machine Image (AMI)** select the **AWS Marketplace** tab
+4. In the search box enter the value *ECS-Optimized Amazon Linux AMI*
+5. Select one of the **Free tier eligible** AMIs; **Amazon ECS-Optimized Amazon Linux AMI**; select **Continue**
+6. In **Step 2: Choose an Instance Type** choose the **t2.large** Type; select **Next: Review and Launch**
+7. Select **Launch**
+8. To allow SSH connection to this VM you'll need a **key pair**. When prompted, select an existing, or create a new, key pair. Be sure to record the location (directory) in which you place the associated **.pem** file, then select **Launch Instances**. You can use the same key pair as used in Example 1.
+9. Select **View Instances**
+
+### Step 2: Establish an SSH session with the EC2 VM
+With the VM created, you access it from your local computer using SSH. Your key pair / .pem file serves as your credential.
+
+There are several ways to establish an SSH connection. From the EC2 Instance list in the AWS Console, select **Connect**, then follow the instructions for the Connection Method **A standalone SSH client**.
+
+The detailed instructions for connecting to a Linux VM can be found [here](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstances.html?icmpid=docs_ec2_console).
+
+<img src="./images/aws_blast_plus_ssh_connect_t2_large.JPG" alt="aws-ssh-connect-t2-large" width="90%" height="90%" />
+
+Specify **ec2-user** as the username, instead of root in your ssh command line or when prompted to login, specify **ec2-user** as the username.
+
+<img src="./images/aws_blast_plus_ssh_connected.JPG" alt="aws-ssh-connected" width="90%" height="90%" />
+
+### Step 2. Retrieve sequences
+```
+## Create directories for analysis
+cd $HOME; sudo mkdir bin blastdb queries fasta results blastdb_custom; sudo chown ec2-user:ec2-user *
+
+## Retrieve query sequence
+docker run --rm ncbi/blast efetch -db protein -format fasta \
+    -id P01349 > queries/P01349.fsa
+```
+
+### Step 3: Download Protein Data Bank Amino Acid Database (pdbaa)
+The command below mounts (using the ```-v``` option) the `$HOME/blastdb` path on the local machine as `/blast/blastdb` on the container, and `blastdbcmd` shows the available BLAST databases at this location.  
+  
+```
+## Download Protein Data Bank amino acid database (pdbaa)
+docker run --rm \
+     -v $HOME/blastdb:/blast/blastdb:rw \
+     -w /blast/blastdb \
+     ncbi/blast \
+     update_blastdb.pl pdbaa
+
+## Display database(s) in $HOME/blastdb
+docker run --rm \
+    -v $HOME/blastdb:/blast/blastdb:ro \
+    ncbi/blast \
+    blastdbcmd -list /blast/blastdb -remove_redundant_dbs
+```
+  
+You should see an output `/blast/blastdb/pdbaa Protein`.  
+
+### Step 4: Run BLAST+
+``` 
+## Run BLAST+ 
+docker run --rm \
+     -v $HOME/blastdb:/blast/blastdb:ro \
+     -v $HOME/blastdb_custom:/blast/blastdb_custom:ro \
+     -v $HOME/queries:/blast/queries:ro \
+     -v $HOME/results:/blast/results:rw \
+     ncbi/blast \
+     blastp -query /blast/queries/P01349.fsa -db pdbaa \
+	 -out /blast/results/blastp_pdbaa.out
+```
+At this point, you should see the output file ```$HOME/results/blastp_pdbaa.out```. To view the content of this output file, use the command ```more $HOME/results/blastp_pdbaa.out```.
+ 
+## Example 3: Run BLAST+ Docker on AWS Fargate
+*Under Development - July 2020*
+
+## Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions
+*Under Development - July 2020*
+
+ 
+## Appendix
+
+### Appendix A: Transfer Files to/from an AWS VM
+One way to transfer files between your local computer and a Linux instance is to use the secure copy protocol (SCP).
+
+The secion *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
+
 # Additional Resources
 * BLAST:
     * [BLAST Command Line Applications User Manual](https://www.ncbi.nlm.nih.gov/books/NBK279696/)  
