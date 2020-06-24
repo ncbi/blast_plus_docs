@@ -783,6 +783,13 @@ docker run --rm \
 ```
 At this point, you should see the output file ```$HOME/results/blastp_pdbaa.out```. To view the content of this output file, use the command ```more $HOME/results/blastp_pdbaa.out```.
  
+## Example 3: Run BLAST+ Docker on AWS Fargate
+*Under Development - July 2020*
+
+## Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions
+*Under Development - July 2020*
+
+ 
 ## Appendix
 
 ### Appendix A: Transfer Files to/from an AWS VM
