@@ -391,7 +391,7 @@ As an alternative, you can also download preformatted BLAST databases from NCBI 
   
 ```docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source gcp```
 
-For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)  By default, `update_blastdb.pl`,will download from the cloud provided you are connected to, or from NCBI if you are not using a supported cloud provider.
+For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)  By default `update_blastdb.pl` will download from the cloud provided you are connected to, or from NCBI if you are not using a supported cloud provider.
   
 ### Show BLAST databases available for download from NCBI  
 *This section is optional.*  
@@ -697,7 +697,7 @@ docker run --rm ncbi/blast update_blastdb.pl --showall pretty --source aws
 ```
 The expected output is a list of BLAST DBs, including their name, description, size, and last updated date.
 
-For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)  By default, `update_blastdb.pl`,will download from the cloud provided you are connected to, or from NCBI if you are not using a supported cloud provider.
+For a detailed description of `update_blastdb.pl`, please refer to the [documentation.](https://www.ncbi.nlm.nih.gov/books/NBK537770/)  By default `update_blastdb.pl` will download from the cloud provided you are connected to, or from NCBI if you are not using a supported cloud provider.
 
 ### Step 6: *Optional -* Show BLAST databases available for download from NCBI
 ```
@@ -758,7 +758,7 @@ docker run --rm \
      -v $HOME/blastdb:/blast/blastdb:rw \
      -w /blast/blastdb \
      ncbi/blast \
-     update_blastdb.pl --source aws pdbaa
+     update_blastdb.pl pdbaa
 
 ## Display database(s) in $HOME/blastdb
 docker run --rm \
