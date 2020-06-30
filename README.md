@@ -1,6 +1,6 @@
 # Official NCBI BLAST+ Docker Image Documentation
 
-This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
+This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform(GCP) and the Amazon Web Services(AWS) using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
 
 ## Table of Contents
 
