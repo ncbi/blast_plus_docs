@@ -7,8 +7,8 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
    * [What Is NCBI BLAST?](#what-is-ncbi-blast)
    * [What Is Cloud Computing?](#what-is-cloud-computing)
    * [What Is Docker?](#what-is-docker)
-   * [Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example](#section-1---getting-started-using-the-blast-docker-image-with-a-small-example)     
-   * [Google Cloud Platform Setup](#google-cloud-platform-setup)  
+   * [Google Cloud Platform Setup](#google-cloud-platform-setup)
+       * [Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example](#section-1---getting-started-using-the-blast-docker-image-with-a-small-example) 
        * [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image)
            * [Step 1. Install Docker](#step-1-install-docker)
                * [Docker `run` command options](#docker-run-command-options)
@@ -51,6 +51,8 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
 
 *There are many containerization tools and standards, such as [Docker](https://www.docker.com/) and [Singularity]( https://www.sylabs.io/singularity/). We will focus solely on Docker, which is considered the de facto standard by many in the field.  
   
+# Google Cloud Platform Setup
+The following sections include instructions to create a Google virtual machine, install Docker, and run BLAST+ commands using the Docker image.  
 # Section 1 - Getting Started Using the BLAST+ Docker Image with a Small Example
    
 This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup) section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
@@ -160,9 +162,6 @@ exit
 
 You have now completed a simple task and seen how BLAST+ with Docker works. To learn about Docker and BLAST+ at production scale, please proceed to the next section.  
   
-
-# Google Cloud Platform Setup
-The following sections include instructions to create a Google virtual machine, install Docker, and run BLAST+ commands using the Docker image.  
   
 In [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image), we will use the same small example from the previous section and discuss alternative approaches, additional useful Docker and BLAST+ commands, and Docker command options and structures.  In [Section 3](#section-3---using-the-blast-docker-image-at-production-scale), we will demonstrate how to run the BLAST+ Docker image at production scale.  
   
