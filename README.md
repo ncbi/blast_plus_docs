@@ -35,7 +35,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
       * [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
       * [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
       * [Appendix](#appendix)
-  * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
+          * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
