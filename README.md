@@ -802,7 +802,7 @@ The secion *Transferring files to Linux instances from Linux using SCP* of the [
     * [BLAST Knowledge Base](https://support.nlm.nih.gov/knowledgebase/category/?id=CAT-01239)
 * Docker: 
     * [Docker Community Forums](https://forums.docker.com)
-    * [Docker Community Slack](https://blog.docker.com/2016/11/introducing-docker-community-directory-docker-community-slack/)
+    * [Docker Community Slack](https://www.docker.com/blog/)
     * [Stack Overflow](https://stackoverflow.com/search?tab=newest&q=docker+blast)
 * Other:
     * [Common Workflow Language (CWL)](https://www.commonwl.org/) is a specification to describe tools and workflows.  This [GitHub Repository](https://github.com/ncbi/cwl-demos/tree/master/blast-pipelines) contains sample CWL workflows using containerized BLAST+.
