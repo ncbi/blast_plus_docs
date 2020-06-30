@@ -27,7 +27,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [Background](#background)
            * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
            * [Commands to run](#commands-to-run)
-   * [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup)
+   * [Amazon Web Services Setup](#amazon-web-services-setup)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
@@ -591,7 +591,7 @@ To delete an instance, follow instructions in the section [Stop the GCP instance
     
 For additional information, please refer to Google Cloud Platform's documentation on [instance life cycle.](https://cloud.google.com/compute/docs/instances/instance-life-cycle)
   
-# Amazon Cloud Platform Setup
+# Amazon Web Services Setup
 
 ## Table of Contents
 
