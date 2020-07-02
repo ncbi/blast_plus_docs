@@ -29,7 +29,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [Commands to run](#commands-to-run)
    * [Amazon Web Services Setup](#amazon-web-services-setup)
    
-      * [Overview](#amazon-web-services-overview)
+      * [Overview](#overview)
       * [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
       * [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
       * [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
@@ -63,7 +63,7 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
 The following sections include instructions to create a Google virtual machine, install Docker, and run BLAST+ commands using the Docker image.  
 # Section 1 - Getting Started Using the BLAST+ Docker Image with a Small Example
    
-This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the [Amazon Web Services Setup section](#Amazon Web Services Setup section) section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
+This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the [Amazon Web Services Setup](#amazon-web-services-setup) section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
 More detailed descriptions of analysis steps, alternative commands, and more advanced topics are covered in the later sections of this documentation.  
   
 Requirements:  A Google account
