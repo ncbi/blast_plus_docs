@@ -1,12 +1,12 @@
 # Official NCBI BLAST+ Docker Image Documentation
 
-This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform (GCP) and the Amazon Web Services (AWS) using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
+This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform (GCP) and Amazon Web Services (AWS) using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
 
 ## Table of Contents
 
-   * [What Is NCBI BLAST?](#what-is-ncbi-blast)
-   * [What Is Cloud Computing?](#what-is-cloud-computing)
-   * [What Is Docker?](#what-is-docker)
+   * [What Is NCBI BLAST?](#what-is-ncbi-blast)  
+   * [What Is Cloud Computing?](#what-is-cloud-computing)  
+   * [What Is Docker?](#what-is-docker)  
    * [Google Cloud Platform Setup](#google-cloud-platform-setup)
        * [Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example](#section-1---getting-started-using-the-blast-docker-image-with-a-small-example) 
        * [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image)
@@ -29,7 +29,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [Commands to run](#commands-to-run)
    * [Amazon Web Services Setup](#amazon-web-services-setup)
    
-      * [Amazon Web Services Setup](#amazon-web-services-setup)
+      * [Overview](#amazon-web-services-overview)
       * [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
       * [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
       * [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
@@ -63,7 +63,7 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
 The following sections include instructions to create a Google virtual machine, install Docker, and run BLAST+ commands using the Docker image.  
 # Section 1 - Getting Started Using the BLAST+ Docker Image with a Small Example
    
-This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup) section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
+This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the [Amazon Web Services Setup section](#Amazon Web Services Setup section) section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
 More detailed descriptions of analysis steps, alternative commands, and more advanced topics are covered in the later sections of this documentation.  
   
 Requirements:  A Google account
@@ -601,9 +601,7 @@ For additional information, please refer to Google Cloud Platform's documentatio
   
 # Amazon Web Services Setup
 
-
-
-## Amazon Web Services Setup
+## Overview
 To run these examples you'll need an Amazon Web Services ([AWS](https://aws.amazon.com)) account. If you don't have one already, you can create an account that provides the ability to explore and try out AWS services free of charge up to specified limits for each service. To get started visit the [Free Tier site](https://aws.amazon.com/free), this will require a valid credit card however it will not be charged if you compute within the Free Tier. When choosing a Free Tier product, be sure it's in the Product Category **Compute**. 
 
 ## Requirements
