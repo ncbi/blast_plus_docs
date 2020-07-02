@@ -1,14 +1,14 @@
 # Official NCBI BLAST+ Docker Image Documentation
 
-This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
+This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nlm.nih.gov/pubmed/2231712) command line applications in a Docker image.  We will demonstrate how to use the Docker image to run BLAST analysis on the Google Cloud Platform (GCP) and the Amazon Web Services (AWS) using a small basic example and a more advanced production-level example.  Some basic knowledge of Unix/Linux commands and BLAST+ is useful in completing this tutorial.  
 
 ## Table of Contents
 
    * [What Is NCBI BLAST?](#what-is-ncbi-blast)
    * [What Is Cloud Computing?](#what-is-cloud-computing)
    * [What Is Docker?](#what-is-docker)
-   * [Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example](#section-1---getting-started-using-the-blast-docker-image-with-a-small-example)     
-   * [Google Cloud Platform Setup](#google-cloud-platform-setup)  
+   * [Google Cloud Platform Setup](#google-cloud-platform-setup)
+       * [Section 1 - Getting Started Using the BLAST+ Docker Image with A Small Example](#section-1---getting-started-using-the-blast-docker-image-with-a-small-example) 
        * [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image)
            * [Step 1. Install Docker](#step-1-install-docker)
                * [Docker `run` command options](#docker-run-command-options)
@@ -27,7 +27,15 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [Background](#background)
            * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
            * [Commands to run](#commands-to-run)
-   * [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup)
+   * [Amazon Web Services Setup](#amazon-web-services-setup)
+   
+      * [Amazon Web Services Setup](#amazon-web-services-setup)
+      * [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
+      * [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
+      * [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
+      * [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
+      * [Appendix](#appendix)
+          * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
@@ -51,6 +59,8 @@ Cloud computing offers potential cost savings by using on-demand, scalable, and 
 
 *There are many containerization tools and standards, such as [Docker](https://www.docker.com/) and [Singularity]( https://www.sylabs.io/singularity/). We will focus solely on Docker, which is considered the de facto standard by many in the field.  
   
+# Google Cloud Platform Setup
+The following sections include instructions to create a Google virtual machine, install Docker, and run BLAST+ commands using the Docker image.  
 # Section 1 - Getting Started Using the BLAST+ Docker Image with a Small Example
    
 This section provides a quick run-through of a BLAST analysis in the Docker environment on a Google instance. This is intended as an overview for those who just want an understanding of the principles of the solution.  If you work with Amazon instances, please go the the [Amazon Cloud Platform Setup](#amazon-cloud-platform-setup) section of this documentation.  The Google Cloud Shell, an interactive shell environment, will be used for this example, which makes it possible to run the following small example without having to perform additional setup, such as creating a billing account or compute instance.
@@ -160,9 +170,6 @@ exit
 
 You have now completed a simple task and seen how BLAST+ with Docker works. To learn about Docker and BLAST+ at production scale, please proceed to the next section.  
   
-
-# Google Cloud Platform Setup
-The following sections include instructions to create a Google virtual machine, install Docker, and run BLAST+ commands using the Docker image.  
   
 In [Section 2 - A Step-by-Step Guide Using the BLAST+ Docker Image](#section-2---a-step-by-step-guide-using-the-blast-docker-image), we will use the same small example from the previous section and discuss alternative approaches, additional useful Docker and BLAST+ commands, and Docker command options and structures.  In [Section 3](#section-3---using-the-blast-docker-image-at-production-scale), we will demonstrate how to run the BLAST+ Docker image at production scale.  
   
@@ -592,17 +599,9 @@ To delete an instance, follow instructions in the section [Stop the GCP instance
     
 For additional information, please refer to Google Cloud Platform's documentation on [instance life cycle.](https://cloud.google.com/compute/docs/instances/instance-life-cycle)
   
-# Amazon Cloud Platform Setup
+# Amazon Web Services Setup
 
-## Table of Contents
 
-* [Amazon Web Services Setup](#amazon-web-services-setup)
-* [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
-* [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
-* [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
-* [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
-* [Appendix](#appendix)
-  * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
 
 ## Amazon Web Services Setup
 To run these examples you'll need an Amazon Web Services ([AWS](https://aws.amazon.com)) account. If you don't have one already, you can create an account that provides the ability to explore and try out AWS services free of charge up to specified limits for each service. To get started visit the [Free Tier site](https://aws.amazon.com/free), this will require a valid credit card however it will not be charged if you compute within the Free Tier. When choosing a Free Tier product, be sure it's in the Product Category **Compute**. 
@@ -803,7 +802,7 @@ The secion *Transferring files to Linux instances from Linux using SCP* of the [
     * [BLAST Knowledge Base](https://support.nlm.nih.gov/knowledgebase/category/?id=CAT-01239)
 * Docker: 
     * [Docker Community Forums](https://forums.docker.com)
-    * [Docker Community Slack](https://blog.docker.com/2016/11/introducing-docker-community-directory-docker-community-slack/)
+    * [Docker Community Slack](https://www.docker.com/blog/)
     * [Stack Overflow](https://stackoverflow.com/search?tab=newest&q=docker+blast)
 * Other:
     * [Common Workflow Language (CWL)](https://www.commonwl.org/) is a specification to describe tools and workflows.  This [GitHub Repository](https://github.com/ncbi/cwl-demos/tree/master/blast-pipelines) contains sample CWL workflows using containerized BLAST+.
