@@ -28,7 +28,6 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
            * [BLAST+ Docker image benchmarks](#blast-docker-image-benchmarks)
            * [Commands to run](#commands-to-run)
    * [Amazon Web Services Setup](#amazon-web-services-setup)
-   
       * [Overview](#overview)
       * [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
       * [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
