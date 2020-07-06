@@ -38,6 +38,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
           * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
+       * [How to report bugs?](#report-to-report-bugs)
    * [License](#license)
    * [Appendix](#appendix)
        * [Appendix A. Cloud and Docker Concepts](#appendix-a-cloud-and-docker-concepts)
@@ -817,6 +818,11 @@ or [email us.](mailto:blast-help@ncbi.nlm.nih.gov)
 [National Center for Biotechnology Information (NCBI)](https://www.ncbi.nlm.nih.gov/)  
 [National Library of Medicine (NLM)](https://www.nlm.nih.gov/)  
 [National Institutes of Health (NIH)](https://www.nih.gov/)
+
+## How to report bugs?
+
+Please follow the instructions in [How do I report BLAST+
+problems?](https://support.nlm.nih.gov/knowledgebase/article/KA-05184/).
 
 # License
 
