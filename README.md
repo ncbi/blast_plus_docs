@@ -795,11 +795,14 @@ One way to transfer files between your local computer and a Linux instance is to
 The section *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
 
 # BLAST Databases
-The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has the list of databases current as of August, 2020.
+The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has the list of databases current as of August, 2020. 
 
 It is also possible to obtain the current list with the command:
 
 docker run --rm ncbi/blast update_blastdb.pl --showall pretty
+
+As shown above, update_blastdb.pl can also be used to download these databases.
+
 
 |Name|Type|Title|
 |:---:|:---:|:---:|
