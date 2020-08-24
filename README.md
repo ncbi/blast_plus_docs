@@ -35,6 +35,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
       * [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
       * [Appendix](#appendix)
           * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
+   * [BLAST Databases](#blast-databases)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
@@ -794,9 +795,9 @@ One way to transfer files between your local computer and a Linux instance is to
 The section *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
 
 # BLAST Databases
-The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has has the current list of databases.
+The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has the list of databases current as of August, 2020.
 
-It is also possible to obtain the most current list with the command:
+It is also possible to obtain the current list with the command:
 
 docker run --rm ncbi/blast update_blastdb.pl --showall pretty
 
