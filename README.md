@@ -35,6 +35,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
       * [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
       * [Appendix](#appendix)
           * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
+   * [BLAST Databases](#blast-databases)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
@@ -791,7 +792,44 @@ At this point, you should see the output file ```$HOME/results/blastp_pdbaa.out`
 ### Appendix A: Transfer Files to/from an AWS VM
 One way to transfer files between your local computer and a Linux instance is to use the secure copy protocol (SCP).
 
-The secion *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
+The section *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
+
+# BLAST Databases
+The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has the list of databases current as of August, 2020. 
+
+It is also possible to obtain the current list with the command:
+
+docker run --rm ncbi/blast update_blastdb.pl --showall pretty
+
+As shown above, update_blastdb.pl can also be used to download these databases.
+
+
+|Name|Type|Title|
+|:---:|:---:|:---:|
+|16S_ribosomal_RNA|DNA|16S ribosomal RNA (Bacteria and Archaea type strains)|
+|18S_fungal_sequences|DNA|18S ribosomal RNA sequences (SSU) from Fungi type and reference material|
+|28S_fungal_sequences|DNA|28S ribosomal RNA sequences (LSU) from Fungi type and reference material|
+|Betacoronavirus|DNA|Betacoronavirus|
+|GCF_000001405.38_top_level|DNA|Homo sapiens GRCh38.p12 [GCF_000001405.38] chromosomes plus unplaced and unlocalized scaffolds|
+|GCF_000001635.26_top_level|DNA|Mus musculus GRCm38.p6 [GCF_000001635.26] chromosomes plus unplaced and unlocalized scaffolds|
+|ITS_RefSeq_Fungi|DNA|Internal transcribed spacer region (ITS) from Fungi type and reference material|
+|ITS_eukaryote_sequences|DNA|ITS eukaryote BLAST|
+|env_nt|DNA|environmental samples|
+|nt|DNA|Nucleotide collection (nt)|
+|patnt|DNA|Nucleotide sequences derived from the Patent division of GenBank|
+|pdbnt|DNA|PDB nucleotide database|
+|ref_euk_rep_genomes|DNA|RefSeq Eukaryotic Representative Genome Database|
+|ref_prok_rep_genomes|DNA|Refseq prokaryote representative genomes (contains refseq assembly)|
+|ref_viroids_rep_genomes|DNA|Refseq viroids representative genomes|
+|ref_viruses_rep_genomes|DNA|Refseq viruses representative genomes|
+|refseq_rna|DNA|NCBI Transcript Reference Sequences|
+|landmark|Protein|Landmark database for SmartBLAST|
+|nr|Protein|All non-redundant GenBank CDS translations+PDB+SwissProt+PIR+PRF excluding environmental samples from WGS projects|
+|pdbaa|Protein|PDB protein database|
+|refseq_protein|Protein|NCBI Protein Reference Sequences|
+|swissprot|Protein|Non-redundant UniProtKB/SwissProt sequences|
+|split-cdd|Protein|CDD split into 32 volumes|
+
 
 # Additional Resources
 * BLAST:
