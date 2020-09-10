@@ -31,8 +31,6 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
       * [Overview](#overview)
       * [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
       * [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
-      * [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
-      * [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
       * [Appendix](#appendix)
           * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
    * [BLAST Databases](#blast-databases)
@@ -780,12 +778,6 @@ docker run --rm \
 ```
 At this point, you should see the output file ```$HOME/results/blastp_pdbaa.out```. To view the content of this output file, use the command ```more $HOME/results/blastp_pdbaa.out```.
  
-## Example 3: Run BLAST+ Docker on AWS Fargate
-*Under Development - July 2020*
-
-## Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions
-*Under Development - July 2020*
-
  
 ## Appendix
 
