@@ -815,10 +815,13 @@ As shown above, update_blastdb.pl can also be used to download these databases.
 |ref_viroids_rep_genomes|DNA|Refseq viroids representative genomes|
 |ref_viruses_rep_genomes|DNA|Refseq viruses representative genomes|
 |refseq_rna|DNA|NCBI Transcript Reference Sequences|
+|refseq_select_rna|DNA|RefSeq Select RNA sequences|
 |landmark|Protein|Landmark database for SmartBLAST|
 |nr|Protein|All non-redundant GenBank CDS translations+PDB+SwissProt+PIR+PRF excluding environmental samples from WGS projects|
 |pdbaa|Protein|PDB protein database|
+|pataa|Protein|Protein sequences derived from the Patent division of GenBank|
 |refseq_protein|Protein|NCBI Protein Reference Sequences|
+|refseq_select_prot|Protein|RefSeq Select proteins|
 |swissprot|Protein|Non-redundant UniProtKB/SwissProt sequences|
 |split-cdd|Protein|CDD split into 32 volumes|
 
