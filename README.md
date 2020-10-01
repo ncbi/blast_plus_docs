@@ -794,7 +794,10 @@ It is also possible to obtain the current list with the command:
 
 docker run --rm ncbi/blast update_blastdb.pl --showall pretty
 
-As shown above, update_blastdb.pl can also be used to download these databases.
+As shown above, update_blastdb.pl can also be used to download these databases.  It will automatically select the appropriate resource (e.g., GCP if you are within that provider).
+
+Accessing the databases on AWS or GCP outside of the cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
+
 
 
 |Name|Type|Title|
@@ -830,7 +833,7 @@ As shown above, update_blastdb.pl can also be used to download these databases.
 
 The NCBI provides metadata for the available BLAST databases at AWS, GCP and the NCBI FTP site.  The metadata is provided in JSON format in a file named blastdb-manifest.json.  
 
-Accessing the databases on AWS or GCP outside of cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
+Accessing the databases on AWS or GCP outside of the cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
 
 On the NCBI FTP site, the file can be simply accessed at https://ftp.ncbi.nlm.nih.gov/blast/db/blastdb-manifest.json
 
