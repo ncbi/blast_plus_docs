@@ -837,9 +837,9 @@ Accessing the databases on AWS or GCP outside of the cloud provider will likely 
 
 On the NCBI FTP site, the file can be simply accessed at https://ftp.ncbi.nlm.nih.gov/blast/db/blastdb-manifest.json
 
-On AWS and GCP, the file is in a date dependent subdirectory with the databases. To find the lastest valid subdirectory, first read s3://ncbi-blast-databases/latest-dir (on AWS) or gs://blast-db/latest-dir (on GCP).  latest-dir is a text file with a date stamp (e.g., 2020-09-29-01-05-01) specifying the most recent directory.  The proper directory will be the AWS or GCP base URI for the BLAST databases (e.g., s3://ncbi-blast-databases/ for AWS) plus the text in the lastest-dir file.  An example URI, in AWS, would be s3://ncbi-blast-databases/2020-09-29-01-05-01  The GCP URI would be similar.  
+On AWS and GCP, the file is in a date dependent subdirectory with the databases. To find the latest valid subdirectory, first read s3://ncbi-blast-databases/latest-dir (on AWS) or gs://blast-db/latest-dir (on GCP).  latest-dir is a text file with a date stamp (e.g., 2020-09-29-01-05-01) specifying the most recent directory.  The proper directory will be the AWS or GCP base URI for the BLAST databases (e.g., s3://ncbi-blast-databases/ for AWS) plus the text in the latest-dir file.  An example URI, in AWS, would be s3://ncbi-blast-databases/2020-09-29-01-05-01  The GCP URI would be similar.  
 
-An excerpt from a metadata file is shown below.  Most fields have obvious meanings.  The files comprise the BLAST database. The size field is in Gigabytes and is intended to specify how much disk space is requried.  The example below is from AWS, but the metadata files on GCP have the same format.  Databases on the FTP site are in gzipped tarfiles, one per volume of the BLAST database, so those are listed rather than the individual files.
+An excerpt from a metadata file is shown below.  Most fields have obvious meanings.  The files comprise the BLAST database. The size field is in Gigabytes and is intended to specify roughly how much disk space is required.  The example below is from AWS, but the metadata files on GCP have the same format.  Databases on the FTP site are in gzipped tarfiles, one per volume of the BLAST database, so those are listed rather than the individual files.
 
 ```
 "16S_ribosomal_RNA": {
