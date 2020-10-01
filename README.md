@@ -136,6 +136,7 @@ For larger analysis, it is recommended to use the `-out` flag to save the output
 
 You can also query P01349.fsa against the PDB as shown in the following code block.
 
+```
 ## Extend the example to query against the Protein Data Bank
 ## Time needed to complete this section: <10 minutes
 
