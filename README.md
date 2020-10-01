@@ -136,7 +136,6 @@ For larger analysis, it is recommended to use the `-out` flag to save the output
 
 You can also query P01349.fsa against the PDB as shown in the following code block.
 
-```
 ## Extend the example to query against the Protein Data Bank
 ## Time needed to complete this section: <10 minutes
 
@@ -824,6 +823,43 @@ As shown above, update_blastdb.pl can also be used to download these databases.
 |refseq_select_prot|Protein|RefSeq Select proteins|
 |swissprot|Protein|Non-redundant UniProtKB/SwissProt sequences|
 |split-cdd|Protein|CDD split into 32 volumes|
+
+# Database metadata
+
+The NCBI provides metadata for the available BLAST databases at AWS, GCP and the NCBI FTP site.  The metadata is provided in JSON format in a file named blastdb-manifest.json.  
+
+Accessing the databases on AWS or GCP outside of cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
+
+On the NCBI FTP site, the file can be simply accessed at https://ftp.ncbi.nlm.nih.gov/blast/db/blastdb-manifest.json
+
+On AWS and GCP the file is in a date dependent subdirectory with the databases. To find the lastest valid subdirectory, first read s3://ncbi-blast-databases/latest-dir (on AWS) or gs://blast-db/latest-dir (on GCP).  latest-dir is a text file with a date stamp (e.g., 2020-09-29-01-05-01) specifying the most recent directory.  The proper directory will be the AWS or GCP base URI for the BLAST databases (e.g., s3://ncbi-blast-databases/ for AWS) plus the text in the lastest-dir file.  An example URI, in AWS, would be s3://ncbi-blast-databases/2020-09-29-01-05-01  The GCP URI would be similar.  
+
+An excerpt from the metadata file is shown below.  Most fields have obvious values.  The files comprise the BLAST database. The size field is in Gigabytes and is intended to specify how much disk space is requried.  Databases on the FTP site are in gzipped tarfile, one per volume of the BLAST database. 
+
+```
+"16S_ribosomal_RNA": {
+    "dbtype": "Nucleotide",
+    "description": "16S ribosomal RNA (Bacteria and Archaea type strains)",
+    "files": [
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.ndb",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nog",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nni",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nnd",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nsq",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nin",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.ntf",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.not",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nhr",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nos",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nto",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/taxdb.btd",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/taxdb.bti"
+    ],
+    "last_updated": "2020-09-12",
+    "size": 0.1782
+  },
+
+```
 
 
 # Additional Resources
