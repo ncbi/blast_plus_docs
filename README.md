@@ -34,6 +34,7 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
       * [Appendix](#appendix)
           * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
    * [BLAST Databases](#blast-databases)
+   * [BLAST Database Metadata](#database-metadata)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [License](#license)
@@ -825,7 +826,7 @@ As shown above, update_blastdb.pl can also be used to download these databases.
 |swissprot|Protein|Non-redundant UniProtKB/SwissProt sequences|
 |split-cdd|Protein|CDD split into 32 volumes|
 
-# Database metadata
+# Database Metadata
 
 The NCBI provides metadata for the available BLAST databases at AWS, GCP and the NCBI FTP site.  The metadata is provided in JSON format in a file named blastdb-manifest.json.  
 
@@ -833,9 +834,9 @@ Accessing the databases on AWS or GCP outside of cloud provider will likely resu
 
 On the NCBI FTP site, the file can be simply accessed at https://ftp.ncbi.nlm.nih.gov/blast/db/blastdb-manifest.json
 
-On AWS and GCP the file is in a date dependent subdirectory with the databases. To find the lastest valid subdirectory, first read s3://ncbi-blast-databases/latest-dir (on AWS) or gs://blast-db/latest-dir (on GCP).  latest-dir is a text file with a date stamp (e.g., 2020-09-29-01-05-01) specifying the most recent directory.  The proper directory will be the AWS or GCP base URI for the BLAST databases (e.g., s3://ncbi-blast-databases/ for AWS) plus the text in the lastest-dir file.  An example URI, in AWS, would be s3://ncbi-blast-databases/2020-09-29-01-05-01  The GCP URI would be similar.  
+On AWS and GCP, the file is in a date dependent subdirectory with the databases. To find the lastest valid subdirectory, first read s3://ncbi-blast-databases/latest-dir (on AWS) or gs://blast-db/latest-dir (on GCP).  latest-dir is a text file with a date stamp (e.g., 2020-09-29-01-05-01) specifying the most recent directory.  The proper directory will be the AWS or GCP base URI for the BLAST databases (e.g., s3://ncbi-blast-databases/ for AWS) plus the text in the lastest-dir file.  An example URI, in AWS, would be s3://ncbi-blast-databases/2020-09-29-01-05-01  The GCP URI would be similar.  
 
-An excerpt from the metadata file is shown below.  Most fields have obvious values.  The files comprise the BLAST database. The size field is in Gigabytes and is intended to specify how much disk space is requried.  Databases on the FTP site are in gzipped tarfile, one per volume of the BLAST database. 
+An excerpt from a metadata file is shown below.  Most fields have obvious meanings.  The files comprise the BLAST database. The size field is in Gigabytes and is intended to specify how much disk space is requried.  The example below is from AWS, but the metadata files on GCP have the same format.  Databases on the FTP site are in gzipped tarfiles, one per volume of the BLAST database, so those are listed rather than the individual files.
 
 ```
 "16S_ribosomal_RNA": {
