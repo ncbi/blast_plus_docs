@@ -348,6 +348,7 @@ For example, to use the BLAST+ version 2.9.0 Docker image instead of the latest 
 ### Supported tags
 *This section is optional.*   
   
+* [2.11.0](https://github.com/ncbi/docker/blob/master/blast/2.11.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.10.1](https://github.com/ncbi/docker/blob/master/blast/2.10.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.10.0](https://github.com/ncbi/docker/blob/master/blast/2.10.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.9.0](https://github.com/ncbi/docker/blob/master/blast/2.9.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_9_0_April_01)
