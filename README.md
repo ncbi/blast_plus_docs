@@ -821,6 +821,7 @@ Accessing the databases on AWS or GCP outside of the cloud provider will likely 
 |ref_viruses_rep_genomes|DNA|Refseq viruses representative genomes|
 |refseq_rna|DNA|NCBI Transcript Reference Sequences|
 |refseq_select_rna|DNA|RefSeq Select RNA sequences|
+|env_nr|Protein|Proteins from WGS metagenomic projects (env_nr)|
 |landmark|Protein|Landmark database for SmartBLAST|
 |nr|Protein|All non-redundant GenBank CDS translations+PDB+SwissProt+PIR+PRF excluding environmental samples from WGS projects|
 |pdbaa|Protein|PDB protein database|
@@ -829,6 +830,7 @@ Accessing the databases on AWS or GCP outside of the cloud provider will likely 
 |refseq_select_prot|Protein|RefSeq Select proteins|
 |swissprot|Protein|Non-redundant UniProtKB/SwissProt sequences|
 |split-cdd|Protein|CDD split into 32 volumes|
+|tsa_nr|Protein|Transcriptome Shotgun Assembly (TSA) sequences|
 
 # Database Metadata
 
