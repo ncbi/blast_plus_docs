@@ -834,20 +834,42 @@ Accessing the databases on AWS or GCP outside of the cloud provider will likely 
 
 # Database Metadata
 
-The NCBI provides metadata for the available BLAST databases at AWS, GCP and the NCBI FTP site.  The metadata is provided in JSON format in a file named blastdb-manifest.json.  
+The NCBI provides metadata for the available BLAST databases at AWS, GCP and the NCBI FTP site.
 
 Accessing the databases on AWS or GCP outside of the cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
 
-On the NCBI FTP site, the file can be simply accessed at https://ftp.ncbi.nlm.nih.gov/blast/db/blastdb-manifest.json
 
-On AWS and GCP, the file is in a date dependent subdirectory with the databases. To find the latest valid subdirectory, first read s3://ncbi-blast-databases/latest-dir (on AWS) or gs://blast-db/latest-dir (on GCP).  latest-dir is a text file with a date stamp (e.g., 2020-09-29-01-05-01) specifying the most recent directory.  The proper directory will be the AWS or GCP base URI for the BLAST databases (e.g., s3://ncbi-blast-databases/ for AWS) plus the text in the latest-dir file.  An example URI, in AWS, would be s3://ncbi-blast-databases/2020-09-29-01-05-01  The GCP URI would be similar.  
+On AWS and GCP, the file is in a date dependent subdirectory with the
+databases. To find the latest valid subdirectory, first read
+``s3://ncbi-blast-databases/latest-dir`` (on AWS) or ``gs://blast-db/latest-dir`` (on
+GCP).  ``latest-dir`` is a text file with a date stamp (e.g., 2020-09-29-01-05-01)
+specifying the most recent directory.  The proper directory will be the AWS or
+GCP base URI for the BLAST databases (e.g., ``s3://ncbi-blast-databases/`` for
+AWS) plus the text in the ``latest-dir`` file.  An example URI, in AWS, would be
+``s3://ncbi-blast-databases/2020-09-29-01-05-01``. The GCP URI would be similar.  
 
-An excerpt from a metadata file is shown below.  Most fields have obvious meanings.  The files comprise the BLAST database. The size field is in Gigabytes and is intended to specify roughly how much disk space is required.  The example below is from AWS, but the metadata files on GCP have the same format.  Databases on the FTP site are in gzipped tarfiles, one per volume of the BLAST database, so those are listed rather than the individual files.
+An excerpt from a metadata file is shown below. Most fields have obvious
+meanings.  The files comprise the BLAST database. The ``bytes-total`` field
+represents the total BLAST database size in bytes and is intended to specify
+how much disk space is required.
+
+The example below is from AWS, but the metadata files on GCP have the same
+format.  Databases on the FTP site are in gzipped tarfiles, one per volume of
+the BLAST database, so those are listed rather than the individual files.
 
 ```
 "16S_ribosomal_RNA": {
+    "version": "1.2",
+    "dbname": "16S_ribosomal_RNA",
     "dbtype": "Nucleotide",
+    "db-version": 5,
     "description": "16S ribosomal RNA (Bacteria and Archaea type strains)",
+    "number-of-letters": 32435109,
+    "number-of-sequences": 22311,
+    "last-updated": "2022-03-07T11:23:00",
+    "number-of-volumes": 1,
+    "bytes-total": 14917073,
+    "bytes-to-cache": 8495841,
     "files": [
       "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.ndb",
       "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nog",
@@ -862,10 +884,8 @@ An excerpt from a metadata file is shown below.  Most fields have obvious meanin
       "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nto",
       "s3://ncbi-blast-databases/2020-09-26-01-05-01/taxdb.btd",
       "s3://ncbi-blast-databases/2020-09-26-01-05-01/taxdb.bti"
-    ],
-    "last_updated": "2020-09-12",
-    "size": 0.1782
-  },
+    ]
+  }
 
 ```
 
