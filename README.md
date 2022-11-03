@@ -789,13 +789,19 @@ One way to transfer files between your local computer and a Linux instance is to
 The section *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
 
 # BLAST Databases
-The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has the list of databases current as of August, 2020. 
+The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has the list of databases current as of November, 2022. 
 
 It is also possible to obtain the current list with the command:
 
 docker run --rm ncbi/blast update_blastdb.pl --showall pretty
 
+or 
+
+update_blastdb.pl --showall pretty     # after downloading the BLAST+ package.
+
 As shown above, update_blastdb.pl can also be used to download these databases.  It will automatically select the appropriate resource (e.g., GCP if you are within that provider).
+
+These databases can also be searched with [ElasticBLAST](https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/) on GCP and AWS.
 
 Accessing the databases on AWS or GCP outside of the cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
 
@@ -811,6 +817,9 @@ Accessing the databases on AWS or GCP outside of the cloud provider will likely 
 |GCF_000001635.26_top_level|DNA|Mus musculus GRCm38.p6 [GCF_000001635.26] chromosomes plus unplaced and unlocalized scaffolds|
 |ITS_RefSeq_Fungi|DNA|Internal transcribed spacer region (ITS) from Fungi type and reference material|
 |ITS_eukaryote_sequences|DNA|ITS eukaryote BLAST|
+|LSU_eukaryote_rRNA|DNA|Large subunit ribosomal nucleic acid for Eukaryotes|
+|LSU_prokaryote_rRNA|DNA|Large subunit ribosomal nucleic acid for Prokaryotes|
+|SSU_eukaryote_rRNA|DNA|Small subunit ribosomal nucleic acid for Eukaryotes|
 |env_nt|DNA|environmental samples|
 |nt|DNA|Nucleotide collection (nt)|
 |patnt|DNA|Nucleotide sequences derived from the Patent division of GenBank|
@@ -821,7 +830,8 @@ Accessing the databases on AWS or GCP outside of the cloud provider will likely 
 |ref_viruses_rep_genomes|DNA|Refseq viruses representative genomes|
 |refseq_rna|DNA|NCBI Transcript Reference Sequences|
 |refseq_select_rna|DNA|RefSeq Select RNA sequences|
-|env_nr|Protein|Proteins from WGS metagenomic projects (env_nr)|
+|tsa_nt|DNA|Transcriptome Shotgun Assembly (TSA) sequences|
+|env_nr|Protein|Proteins from WGS metagenomic projects|
 |landmark|Protein|Landmark database for SmartBLAST|
 |nr|Protein|All non-redundant GenBank CDS translations+PDB+SwissProt+PIR+PRF excluding environmental samples from WGS projects|
 |pdbaa|Protein|PDB protein database|
@@ -829,8 +839,8 @@ Accessing the databases on AWS or GCP outside of the cloud provider will likely 
 |refseq_protein|Protein|NCBI Protein Reference Sequences|
 |refseq_select_prot|Protein|RefSeq Select proteins|
 |swissprot|Protein|Non-redundant UniProtKB/SwissProt sequences|
-|split-cdd|Protein|CDD split into 32 volumes|
 |tsa_nr|Protein|Transcriptome Shotgun Assembly (TSA) sequences|
+|cdd|Protein|Conserved Domain Database (CDD) is a collection of well-annotated multiple sequence alignment models reprepresented as position-specific score matrices|
 
 # Database Metadata
 
