@@ -496,6 +496,8 @@ All GCP instances are configured with 200 GB of persistent standard disk.
 Please refer to GCP for more information on [machine types](https://cloud.google.com/compute/docs/machine-types),
 [regions and zones,](https://cloud.google.com/compute/docs/regions-zones/) and [compute cost.](https://cloud.google.com/compute/pricing)
 
+Please note that running the `blastn` binary without specifying its `-task` parameter invokes the MegaBLAST algorithm.
+
 
 ## Commands to run
 ```
