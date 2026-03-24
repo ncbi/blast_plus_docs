@@ -16,10 +16,10 @@ This repository contains documentation for the [NCBI BLAST+](https://www.ncbi.nl
       * [Requirements](#requirements-1)
       * [Example 1: Run BLAST+ Docker on an Amazon EC2 Virtual Machine](#example-1-run-blast-docker-on-an-amazon-ec2-virtual-machine)
       * [Example 2: Run BLAST+ Docker on an Amazon EC2 Virtual Machine - Protein Data Bank Amino Acid DB](#example-2-run-blast-docker-on-an-amazon-ec2-virtual-machine---protein-data-bank-amino-acid-db)
-      * [Example 3: Run BLAST+ Docker on AWS Fargate](#example-3-run-blast-docker-on-aws-fargate)
-      * [Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions](#example-4-run-blast-docker-on-aws-fargate-at-scale-using-step-and-batch-functions)
       * [Appendix](#appendix)
          * [Appendix A: Transfer Files to/from an AWS VM](#appendix-a-transfer-files-tofrom-an-aws-vm)
+   * [BLAST Databases](#blast-databases)
+   * [BLAST Database Metadata](#database-metadata)
    * [Additional Resources](#additional-resources)
    * [Maintainer](#maintainer)
    * [How to report bugs?](#how-to-report-bugs)
@@ -336,6 +336,7 @@ For example, to use the BLAST+ version 2.9.0 Docker image instead of the latest 
 ### Supported tags
 *This section is optional.*   
   
+* [2.11.0](https://github.com/ncbi/docker/blob/master/blast/2.11.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.10.1](https://github.com/ncbi/docker/blob/master/blast/2.10.1/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.10.0](https://github.com/ncbi/docker/blob/master/blast/2.10.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777)
 * [2.9.0](https://github.com/ncbi/docker/blob/master/blast/2.9.0/Dockerfile): [release notes](https://www.ncbi.nlm.nih.gov/books/NBK131777/#_Blast_ReleaseNotes_BLAST_2_9_0_April_01)
@@ -482,6 +483,8 @@ All GCP instances are configured with 200 GB of persistent standard disk.
    
 Please refer to GCP for more information on [machine types](https://cloud.google.com/compute/docs/machine-types),
 [regions and zones,](https://cloud.google.com/compute/docs/regions-zones/) and [compute cost.](https://cloud.google.com/compute/pricing)
+
+Please note that running the `blastn` binary without specifying its `-task` parameter invokes the MegaBLAST algorithm.
 
 
 ## Commands to run
@@ -767,19 +770,125 @@ docker run --rm \
 ```
 At this point, you should see the output file ```$HOME/results/blastp_pdbaa.out```. To view the content of this output file, use the command ```more $HOME/results/blastp_pdbaa.out```.
  
-## Example 3: Run BLAST+ Docker on AWS Fargate
-*Under Development - July 2020*
-
-## Example 4: Run BLAST+ Docker on AWS Fargate at Scale Using Step and Batch Functions
-*Under Development - July 2020*
-
  
 ## Appendix
 
 ### Appendix A: Transfer Files to/from an AWS VM
 One way to transfer files between your local computer and a Linux instance is to use the secure copy protocol (SCP).
 
-The secion *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
+The section *Transferring files to Linux instances from Linux using SCP* of the [Amazon EC2 User Guide for Linux Instances](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AccessingInstancesLinux.html) provides detailed instructions for this process.
+
+# BLAST Databases
+The NCBI hosts the same databases on AWS, GCP, and the NCBI FTP site.  The table below has the list of databases current as of November, 2022. 
+
+It is also possible to obtain the current list with the command:
+
+docker run --rm ncbi/blast update_blastdb.pl --showall pretty
+
+or 
+
+update_blastdb.pl --showall pretty     # after downloading the BLAST+ package.
+
+As shown above, update_blastdb.pl can also be used to download these databases.  It will automatically select the appropriate resource (e.g., GCP if you are within that provider).
+
+These databases can also be searched with [ElasticBLAST](https://blast.ncbi.nlm.nih.gov/doc/elastic-blast/) on GCP and AWS.
+
+Accessing the databases on AWS or GCP outside of the cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
+
+
+
+|Name|Type|Title|
+|:---:|:---:|:---:|
+|16S_ribosomal_RNA|DNA|16S ribosomal RNA (Bacteria and Archaea type strains)|
+|18S_fungal_sequences|DNA|18S ribosomal RNA sequences (SSU) from Fungi type and reference material|
+|28S_fungal_sequences|DNA|28S ribosomal RNA sequences (LSU) from Fungi type and reference material|
+|Betacoronavirus|DNA|Betacoronavirus|
+|GCF_000001405.38_top_level|DNA|Homo sapiens GRCh38.p12 [GCF_000001405.38] chromosomes plus unplaced and unlocalized scaffolds|
+|GCF_000001635.26_top_level|DNA|Mus musculus GRCm38.p6 [GCF_000001635.26] chromosomes plus unplaced and unlocalized scaffolds|
+|ITS_RefSeq_Fungi|DNA|Internal transcribed spacer region (ITS) from Fungi type and reference material|
+|ITS_eukaryote_sequences|DNA|ITS eukaryote BLAST|
+|LSU_eukaryote_rRNA|DNA|Large subunit ribosomal nucleic acid for Eukaryotes|
+|LSU_prokaryote_rRNA|DNA|Large subunit ribosomal nucleic acid for Prokaryotes|
+|SSU_eukaryote_rRNA|DNA|Small subunit ribosomal nucleic acid for Eukaryotes|
+|env_nt|DNA|environmental samples|
+|nt|DNA|Nucleotide collection (nt)|
+|patnt|DNA|Nucleotide sequences derived from the Patent division of GenBank|
+|pdbnt|DNA|PDB nucleotide database|
+|ref_euk_rep_genomes|DNA|RefSeq Eukaryotic Representative Genome Database|
+|ref_prok_rep_genomes|DNA|Refseq prokaryote representative genomes (contains refseq assembly)|
+|ref_viroids_rep_genomes|DNA|Refseq viroids representative genomes|
+|ref_viruses_rep_genomes|DNA|Refseq viruses representative genomes|
+|refseq_rna|DNA|NCBI Transcript Reference Sequences|
+|refseq_select_rna|DNA|RefSeq Select RNA sequences|
+|tsa_nt|DNA|Transcriptome Shotgun Assembly (TSA) sequences|
+|env_nr|Protein|Proteins from WGS metagenomic projects|
+|landmark|Protein|Landmark database for SmartBLAST|
+|nr|Protein|All non-redundant GenBank CDS translations+PDB+SwissProt+PIR+PRF excluding environmental samples from WGS projects|
+|pdbaa|Protein|PDB protein database|
+|pataa|Protein|Protein sequences derived from the Patent division of GenBank|
+|refseq_protein|Protein|NCBI Protein Reference Sequences|
+|refseq_select_prot|Protein|RefSeq Select proteins|
+|swissprot|Protein|Non-redundant UniProtKB/SwissProt sequences|
+|tsa_nr|Protein|Transcriptome Shotgun Assembly (TSA) sequences|
+|cdd|Protein|Conserved Domain Database (CDD) is a collection of well-annotated multiple sequence alignment models reprepresented as position-specific score matrices|
+
+# Database Metadata
+
+The NCBI provides metadata for the available BLAST databases at AWS, GCP and the NCBI FTP site.
+
+Accessing the databases on AWS or GCP outside of the cloud provider will likely result in egress charges to your account.  If you are not on the cloud provider, you should use the databases at the NCBI FTP site.
+
+
+On AWS and GCP, the file is in a date dependent subdirectory with the
+databases. To find the latest valid subdirectory, first read
+``s3://ncbi-blast-databases/latest-dir`` (on AWS) or ``gs://blast-db/latest-dir`` (on
+GCP).  ``latest-dir`` is a text file with a date stamp (e.g., 2020-09-29-01-05-01)
+specifying the most recent directory.  The proper directory will be the AWS or
+GCP base URI for the BLAST databases (e.g., ``s3://ncbi-blast-databases/`` for
+AWS) plus the text in the ``latest-dir`` file.  An example URI, in AWS, would be
+``s3://ncbi-blast-databases/2020-09-29-01-05-01``. The GCP URI would be similar.  
+
+An excerpt from a metadata file is shown below. Most fields have obvious
+meanings.  The files comprise the BLAST database. The ``bytes-total`` field
+represents the total BLAST database size in bytes and is intended to specify
+how much disk space is required.
+
+The example below is from AWS, but the metadata files on GCP have the same
+format.  Databases on the FTP site are in gzipped tarfiles, one per volume of
+the BLAST database, so those are listed rather than the individual files.
+
+```
+"16S_ribosomal_RNA": {
+    "version": "1.2",
+    "dbname": "16S_ribosomal_RNA",
+    "dbtype": "Nucleotide",
+    "db-version": 5,
+    "description": "16S ribosomal RNA (Bacteria and Archaea type strains)",
+    "number-of-letters": 32435109,
+    "number-of-sequences": 22311,
+    "last-updated": "2022-03-07T11:23:00",
+    "number-of-volumes": 1,
+    "bytes-total": 14917073,
+    "bytes-to-cache": 8495841,
+    "files": [
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.ndb",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nog",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nni",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nnd",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nsq",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nin",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.ntf",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.not",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nhr",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nos",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/16S_ribosomal_RNA.nto",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/taxdb.btd",
+      "s3://ncbi-blast-databases/2020-09-26-01-05-01/taxdb.bti"
+    ]
+  }
+
+```
+
 
 # Additional Resources
 * BLAST:
