@@ -805,8 +805,10 @@ or [email us.](mailto:blast-help@ncbi.nlm.nih.gov)
 
 # How to report bugs?
 
-Please provide us with the information in steps 1-4 via email(mailto:blast-help@ncbi.nlm.nih.gov) from [How do I report BLAST+
+Please provide us with as much of the information in steps 1-4 via email (mailto:blast-help@ncbi.nlm.nih.gov) from [How do I report BLAST+
 problems?](https://support.nlm.nih.gov/knowledgebase/article/KA-05184/).
+Additionally, please let us know which cloud vendor you are working with,
+which docker image you used: `docker inspect ncbi/blast`.
 
 # License
 
