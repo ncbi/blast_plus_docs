@@ -899,7 +899,7 @@ the BLAST database, so those are listed rather than the individual files.
     * [Docker Community Slack](https://www.docker.com/blog/)
     * [Stack Overflow](https://stackoverflow.com/search?tab=newest&q=docker+blast)
 * Other:
-    * [Common Workflow Language (CWL)](https://www.commonwl.org/) is a specification to describe tools and workflows.  This [GitHub Repository](https://github.com/ncbi/cwl-demos/tree/master/blast-pipelines) contains sample CWL workflows using containerized BLAST+.
+    * [Common Workflow Language (CWL)](https://www.commonwl.org/) is a specification to describe tools and workflows.
     * [Google Cloud Platform](https://cloud.google.com/)
     * [NIH/STRIDES](https://datascience.nih.gov/strides)
     * [GitHub](https://github.com/ncbi)
